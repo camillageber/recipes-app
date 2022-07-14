@@ -1,7 +1,9 @@
 import React, { useContext, useState } from 'react';
+import PropTypes from 'prop-types';
+
 import foodContext from '../context/FoodContext';
 
-export default function Login() {
+export default function Login({ history }) {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
 
@@ -15,6 +17,8 @@ export default function Login() {
     localStorage.setItem('user', JSON.stringify({ email }));
     localStorage.setItem('mealsToken', JSON.stringify(1));
     localStorage.setItem('cocktailsToken', JSON.stringify(1));
+
+    history.push('/foods');
   };
 
   return (
@@ -51,3 +55,7 @@ export default function Login() {
     </div>
   );
 }
+
+Login.propTypes = {
+  history: PropTypes.shape({ push: PropTypes.func }).isRequired,
+};
