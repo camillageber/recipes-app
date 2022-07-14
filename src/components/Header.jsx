@@ -1,16 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 
+import Svg from './Svg';
 import icon from '../images/profileIcon.svg';
 import search from '../images/searchIcon.svg';
 
-export default function Header({ pageTitle = 'Foods' }) {
+export default function Header({ pageTitle }) {
+  const [onRedirect, setOnRedirect] = useState(false);
+
   return (
     <header>
-      <img src={ icon } data-testid="profile-top-btn" alt="icon" />
+      <button
+        type="button"
+        onClick={ () => setOnRedirect(true) }
+      >
+        <Svg src={ icon } />
+      </button>
       <h2 data-testid="page-title">{ pageTitle }</h2>
       { (pageTitle === 'Foods' || pageTitle === 'Drinks')
-      && <img src={ search } alt="search" data-testid="search-top-btn" /> }
+      && (
+        <button
+          type="button"
+          data-testid="search-top-btn"
+        >
+          <Svg src={ search } />
+        </button>) }
+      { onRedirect && <Redirect to="/profile" /> }
     </header>
   );
 }
