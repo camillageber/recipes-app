@@ -1,6 +1,5 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { allMealDetailsById } from './services/foodAPI';
 
 import Login from './pages/Login';
 import Foods from './pages/Foods';
@@ -12,8 +11,6 @@ import DoneRecipes from './pages/DoneRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';
 
 import './App.css';
-
-console.log(allMealDetailsById('53013'));
 
 function App() {
   return (

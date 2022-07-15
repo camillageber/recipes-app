@@ -19,7 +19,7 @@ export async function searchMealByName(mealName) {
  * @param id - The id of the meal you want to fetch.
  * @returns The result is an array of objects.
  */
-export async function allMealDetailsById(id) {
+export async function getAllMealDetailsById(id) {
   const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
   const result = await fetch(url)
     .then((response) => response.json())
@@ -36,7 +36,7 @@ export async function allMealDetailsById(id) {
  * It fetches the data from the API and returns the data in an object
  * @returns An object with 3 properties: CategoriesList, AreaList, IngredientsList.
  */
-export async function listAllCategoriesAreaIngredients() {
+export async function getAllCategoriesAreaIngredients() {
   const urlCategories = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
   const CategoriesList = await fetch(urlCategories)
     .then((response) => response.json())
@@ -64,7 +64,7 @@ export async function listAllCategoriesAreaIngredients() {
  * @param Ingredient - The main ingredient of the meal.
  * @returns An array of objects.
  */
-export async function filterByMainIngredient(Ingredient) {
+export async function getByMainIngredient(Ingredient) {
   const url = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${Ingredient}`;
   const result = await fetch(url)
     .then((response) => response.json())
@@ -79,7 +79,7 @@ export async function filterByMainIngredient(Ingredient) {
  * @param Category - The category of the meal you want to filter by.
  * @returns An array of objects.
  */
-export async function filterByCategory(Category) {
+export async function getByCategory(Category) {
   const url = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${Category}`;
   const result = await fetch(url)
     .then((response) => response.json())
@@ -94,7 +94,7 @@ export async function filterByCategory(Category) {
  * @param Area - String
  * @returns An array of objects.
  */
-export async function filterByArea(Area) {
+export async function getByArea(Area) {
   const url = `https://www.themealdb.com/api/json/v1/1/filter.php?a=${Area}`;
   const result = await fetch(url)
     .then((response) => response.json())
@@ -111,7 +111,7 @@ export async function filterByArea(Area) {
  * @param filter - a = Area, i = Main Ingredient, c = Category
  * @returns An array of objects.
  */
-export async function filterBy(dateFilter, filter) {
+export async function getBy(dateFilter, filter) {
   if (!'aic'.includes(filter)) return [];
   const url = `https://www.themealdb.com/api/json/v1/1/filter.php?${filter}=${dateFilter}`;
   const result = await fetch(url)
