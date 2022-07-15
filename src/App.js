@@ -11,9 +11,6 @@ import DoneRecipes from './pages/DoneRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';
 
 import './App.css';
-import { getAllDrinkDetailsById } from './services/drinkAPI';
-
-getAllDrinkDetailsById('11007');
 
 function App() {
   return (

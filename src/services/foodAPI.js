@@ -11,6 +11,14 @@ export async function searchMealByName(mealName) {
 
   return result;
 }
+export async function searchFirstLetter(mealName) {
+  const url = `https://www.themealdb.com/api/json/v1/1/search.php?f=${mealName}`;
+  const result = await fetch(url)
+    .then((response) => response.json())
+    .then((response) => response.meals);
+
+  return result;
+}
 
 /**
  * It takes the id of a meal, fetches the data from the API, and returns an object with the data
@@ -99,16 +107,21 @@ export async function getByArea(Area) {
 
 /**
  * It takes a dateFilter and a filter as parameters, and returns an array of meals
- * @param dateFilter - The date you want to filter by.
+ * @param dataFilter - The date you want to filter by.
  * @param filter - a = Area, i = Main Ingredient, c = Category
  * @returns An array of objects.
  */
-export async function getFoodBy(dateFilter, filter) {
-  if (!'aicsf'.includes(filter)) return [];
-  const url = `https://www.themealdb.com/api/json/v1/1/filter.php?${filter}=${dateFilter}`;
+export async function getFoodBy(dataFilter, filter) {
+  if (!'aicsf'.includes(filter) || !dataFilter) return [];
+  if (filter === 's') {
+    return searchMealByName(dataFilter);
+  } if (filter === 'f') {
+    return searchFirstLetter(dataFilter);
+  }
+  const url = `https://www.themealdb.com/api/json/v1/1/filter.php?${filter}=${dataFilter}`;
   const result = await fetch(url)
     .then((response) => response.json())
-    .then((response) => response.meals)
+    .then((response) => response)
     .catch((e) => console.log(`error ${e}`));
 
   return result;
