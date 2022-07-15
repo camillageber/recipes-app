@@ -9,8 +9,6 @@ export async function searchMealByName(mealName) {
     .then((response) => response.json())
     .then((response) => response.meals);
 
-  console.log(result);
-
   return result;
 }
 
@@ -25,18 +23,8 @@ export async function getAllMealDetailsById(id) {
     .then((response) => response.json())
     .then((response) => response.meals);
 
-  const newResult = Object.entries(result[0]).reduce((acc, current) => {
-    const [key, value] = current;
-    if (value && value.trim()) {
-      const newKey = key.split('str').join('');
-      acc[newKey] = value;
-    }
-    return acc;
-  }, {});
-
-  newResult.MealThumbPreview = `${result[0].strMealThumb}/preview`;
-  console.log(newResult);
-  return newResult;
+  result[0].strMealThumbPreview = `${result[0].strMealThumb}/preview`;
+  return result[0];
 }
 
 /**
@@ -78,7 +66,6 @@ export async function getByMainIngredient(Ingredient) {
     .then((response) => response.meals)
     .catch((e) => console.log(`error ${e}`));
 
-  console.log(result);
   return result;
 }
 /**
@@ -93,7 +80,6 @@ export async function getByCategory(Category) {
     .then((response) => response.meals)
     .catch((e) => console.log(`error ${e}`));
 
-  console.log(result);
   return result;
 }
 /**
@@ -108,7 +94,6 @@ export async function getByArea(Area) {
     .then((response) => response.meals)
     .catch((e) => console.log(`error ${e}`));
 
-  console.log(result);
   return result;
 }
 
@@ -118,14 +103,13 @@ export async function getByArea(Area) {
  * @param filter - a = Area, i = Main Ingredient, c = Category
  * @returns An array of objects.
  */
-export async function getBy(dateFilter, filter) {
-  if (!'aic'.includes(filter)) return [];
+export async function getFoodBy(dateFilter, filter) {
+  if (!'aicsf'.includes(filter)) return [];
   const url = `https://www.themealdb.com/api/json/v1/1/filter.php?${filter}=${dateFilter}`;
   const result = await fetch(url)
     .then((response) => response.json())
     .then((response) => response.meals)
     .catch((e) => console.log(`error ${e}`));
 
-  console.log(result);
   return result;
 }
