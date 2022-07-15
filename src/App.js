@@ -11,6 +11,9 @@ import DoneRecipes from './pages/DoneRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';
 
 import './App.css';
+import { getAllMealDetailsById } from './services/foodAPI';
+
+getAllMealDetailsById('53013');
 
 function App() {
   return (

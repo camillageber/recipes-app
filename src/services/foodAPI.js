@@ -15,9 +15,9 @@ export async function searchMealByName(mealName) {
 }
 
 /**
- * It takes an id as an argument, and returns the details of the meal with that id
- * @param id - The id of the meal you want to fetch.
- * @returns The result is an array of objects.
+ * It takes the id of a meal, fetches the data from the API, and returns an object with the data
+ * @param id - The id of the meal you want to get the details for.
+ * @returns An object with the meal details.
  */
 export async function getAllMealDetailsById(id) {
   const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
@@ -25,11 +25,18 @@ export async function getAllMealDetailsById(id) {
     .then((response) => response.json())
     .then((response) => response.meals);
 
-  const resultwhitPreview = { ...result[0],
-    strMealThumbPreview: `${result[0].strMealThumb}/preview`,
-  };
-  console.log(resultwhitPreview);
-  return { resultwhitPreview };
+  const newResult = Object.entries(result[0]).reduce((acc, current) => {
+    const [key, value] = current;
+    if (value && value.trim()) {
+      const newKey = key.split('str').join('');
+      acc[newKey] = value;
+    }
+    return acc;
+  }, {});
+
+  newResult.MealThumbPreview = `${result[0].strMealThumb}/preview`;
+  console.log(newResult);
+  return newResult;
 }
 
 /**
