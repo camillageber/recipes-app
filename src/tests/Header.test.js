@@ -18,4 +18,14 @@ describe('Testando o header', () => {
     const title = screen.getByTestId('page-title');
     expect(title).toBeInTheDocument();
   });
+
+  test('testa botão de busca', () => {
+    const {history} = renderWithRouter(<Header pageTitle='Foods'/>);
+    const buttonSearch = screen.getByTestId('search-top-btn');
+
+    userEvent.click(buttonSearch);
+    const {location: {pathname}} = history;
+    const inputSearch = screen.getByTestId('search-input');
+    expect(inputSearch).toBeInTheDocument();
+  });
 });
