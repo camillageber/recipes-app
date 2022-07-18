@@ -3,7 +3,6 @@ import foodContext from '../context/FoodContext';
 
 export default function Search() {
   const { handleSearchBar } = useContext(foodContext);
-
   const [input, setInput] = useState('');
   const [radiosButton, setRadiosButton] = useState('s');
 

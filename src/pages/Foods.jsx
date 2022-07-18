@@ -10,7 +10,7 @@ export default function Foods() {
   console.log(resultSearchBar);
 
   useEffect(() => {
-    if (searchBar.input.length > 1 && searchBar.radio === 'f') {
+    if ((searchBar.input.length) > 1 && searchBar.radio === 'f') {
       global.alert('Your search must have only 1 (one) character');
     } else {
       (async () => {
