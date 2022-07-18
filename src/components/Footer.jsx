@@ -10,7 +10,7 @@ export default function Footer() {
   // const [onRedirectDrink, setOnRedirectDrinkl] = useState(false);
   const history = useHistory();
   return (
-    <footer data-testid="footer">
+    <footer data-testid="footer" className="fixed">
       <button
         type="button"
         onClick={ () => history.push('/foods') }
