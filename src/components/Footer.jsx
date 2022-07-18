@@ -8,9 +8,9 @@ import mealIcon from '../images/mealIcon.svg';
 export default function Footer() {
   // const [onRedirectMeal, setOnRedirectMeal] = useState(false);
   // const [onRedirectDrink, setOnRedirectDrinkl] = useState(false);
-  const history = useHistory;
+  const history = useHistory();
   return (
-    <Footer data-testid="footer">
+    <footer data-testid="footer">
       <button
         type="button"
         onClick={ () => history.push('/foods') }
@@ -25,6 +25,6 @@ export default function Footer() {
       </button>
       {/* { onRedirectMeal && <Redirect to="/foods" /> }
       { onRedirectDrink && <Redirect to="/drinks" /> } */}
-    </Footer>
+    </footer>
   );
 }
