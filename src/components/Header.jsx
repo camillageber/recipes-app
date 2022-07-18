@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 import Svg from './Svg';
 import icon from '../images/profileIcon.svg';
 import search from '../images/searchIcon.svg';
-import Search from './Search';
+import SearchBar from './SearchBar';
 
 export default function Header({ pageTitle }) {
   const [onRedirect, setOnRedirect] = useState(false);
@@ -29,7 +29,7 @@ export default function Header({ pageTitle }) {
           <Svg src={ search } testId="search-top-btn" />
         </button>) }
       { onRedirect && <Redirect to="/profile" /> }
-      {togglesearch && <Search />}
+      {togglesearch && <SearchBar />}
     </header>
   );
 }

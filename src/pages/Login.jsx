@@ -1,17 +1,12 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-
-import foodContext from '../context/FoodContext';
 
 export default function Login({ history }) {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
 
-  const context = useContext(foodContext);
   const SIX = 6;
   const emailForm = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
-
-  console.log(context);
 
   const handleCLick = () => {
     localStorage.setItem('user', JSON.stringify({ email }));
