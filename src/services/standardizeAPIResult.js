@@ -13,6 +13,5 @@ export default function standardizeAPIResult(recipes) {
       return acc;
     }, {});
 
-  console.log(result);
   return result;
 }

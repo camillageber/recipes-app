@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import Svg from '../components/Svg';
+import foodContext from '../context/FoodContext';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import useResultAPIs from '../services/combinerAPIs';
@@ -9,9 +10,10 @@ import useResultAPIs from '../services/combinerAPIs';
 import './details.css';
 
 export default function Details() {
+  const { typeResult } = useContext(foodContext);
   const [recipieDetails, setRecipieDetails] = useState({});
   const [ingredients, setIngredients] = useState([]);
-  const { getById } = useResultAPIs('foods');
+  const { getById } = useResultAPIs(typeResult);
   const history = useHistory();
 
   const getIngredients = (recipe) => {
