@@ -5,6 +5,7 @@ import Svg from './Svg';
 import drinkIcon from '../images/drinkIcon.svg';
 import mealIcon from '../images/mealIcon.svg';
 import foodContext from '../context/FoodContext';
+import './Footer.css';
 
 export default function Footer() {
   // const [onRedirectMeal, setOnRedirectMeal] = useState(false);
@@ -15,6 +16,7 @@ export default function Footer() {
     <footer data-testid="footer" className="fixed">
       <button
         type="button"
+        className="food"
         onClick={ () => {
           history.push('/foods');
           setTypeResult('foods');
@@ -24,6 +26,7 @@ export default function Footer() {
       </button>
       <button
         type="button"
+        className="drink"
         onClick={ () => {
           setTypeResult('drinks');
           history.push('/drinks');

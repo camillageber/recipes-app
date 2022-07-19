@@ -38,7 +38,7 @@ export default function Foods() {
   }
   return (
     <>
-      <Header pageTitle="Drinks" />
+      <Header pageTitle="Drinks" color="green" />
       <h1>Drinks</h1>
       <div className="container-cards">
         {resultSearchBar.map((recipie, index) => (
