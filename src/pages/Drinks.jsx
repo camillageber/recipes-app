@@ -1,27 +1,52 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+
 import Header from '../components/Header';
 import foodContext from '../context/FoodContext';
-import { getDrinkBy } from '../services/drinkAPI';
+import './foods.css';
+import Card from '../components/Card';
+import useResultAPIs from '../services/combinerAPIs';
 
-export default function Drinks() {
+export default function Foods() {
   const { searchBar } = useContext(foodContext);
   const [resultSearchBar, setResultSearchBar] = useState([]);
+  const { getByFirstLetter, getBy } = useResultAPIs('drinks');
 
-  console.log(resultSearchBar);
+  const history = useHistory();
 
   useEffect(() => {
-    if (searchBar.input.length > 1 && searchBar.radio === 'f') {
+    (async () => {
+      const result = await getByFirstLetter('c');
+      setResultSearchBar(result.slice(0, +('12')));
+    })();
+  }, []);
+
+  useEffect(() => {
+    if ((searchBar.input.length) > 1 && searchBar.radio === 'f') {
       global.alert('Your search must have only 1 (one) character');
     } else {
       (async () => {
-        setResultSearchBar(await getDrinkBy(searchBar.input, searchBar.radio));
+        setResultSearchBar(await getBy(searchBar.input, searchBar.radio));
       })();
     }
   }, [searchBar]);
+
+  if (resultSearchBar.length === 1) {
+    history.push(`/drinks/${resultSearchBar[0].idMeal}`);
+  }
   return (
     <>
       <Header pageTitle="Drinks" />
       <h1>Drinks</h1>
+      <div className="container-cards">
+        {resultSearchBar.map((recipie, index) => (
+          <Card
+            { ...recipie }
+            key={ recipie.idrecipe }
+            index={ index }
+          />
+        ))}
+      </div>
     </>
   );
 }

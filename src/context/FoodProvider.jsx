@@ -5,7 +5,7 @@ import foodContext from './FoodContext';
 
 function Provider({ children }) {
   const [searchBar, setSearchBar] = useState({ input: '', radio: '' });
-  const [typeResult, setTypeResult] = useState('foods');
+  const [typeResult, setTypeResult] = useState('drinks');
 
   function handleSearchBar({ inputValue, radioValue }) {
     setSearchBar({ input: inputValue, radio: radioValue });

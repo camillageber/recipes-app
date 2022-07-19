@@ -41,9 +41,9 @@ export async function getAllMealDetailsById(id) {
   const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
   const result = await fetch(url)
     .then((response) => response.json())
-    .then((response) => response.meals);
+    .then((response) => response.meals[0]);
 
-  const newResult = await standardizeAPIResult(result);
+  const newResult = standardizeAPIResult(result);
 
   return newResult;
 }

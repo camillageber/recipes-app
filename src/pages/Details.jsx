@@ -3,13 +3,15 @@ import { useHistory } from 'react-router-dom';
 import Svg from '../components/Svg';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import { getAllMealDetailsById } from '../services/foodAPI';
+import useResultAPIs from '../services/combinerAPIs';
+// import { getAllMealDetailsById } from '../services/foodAPI';
 
 import './details.css';
 
 export default function Details() {
   const [recipieDetails, setRecipieDetails] = useState({});
   const [ingredients, setIngredients] = useState([]);
+  const { getById } = useResultAPIs('foods');
   const history = useHistory();
 
   const getIngredients = (recipe) => {
@@ -31,7 +33,8 @@ export default function Details() {
     const { location: { pathname } } = history;
     const id = pathname.split('/')[2];
     (async () => {
-      const result = await getAllMealDetailsById(id);
+      const result = await getById(id);
+      console.log(result);
       setRecipieDetails(result);
       setIngredients(getIngredients(result));
     })();
@@ -44,13 +47,13 @@ export default function Details() {
       <div className="card-details">
         <img
           className="image-card"
-          src={ recipieDetails.strMealThumb }
+          src={ recipieDetails.recipethumb }
           alt="Big Mac"
         />
         <div className="card-inner">
           <div className="title-subtitle-card">
-            <h1 className="title-card">{ recipieDetails.strMeal }</h1>
-            <p className="category-card">{ recipieDetails.strCategory }</p>
+            <h1 className="title-card">{ recipieDetails.recipe }</h1>
+            <p className="category-card">{ recipieDetails.category }</p>
           </div>
           <div className="icons-card">
             <Svg src={ shareIcon } />
@@ -77,7 +80,7 @@ export default function Details() {
           <h2>Instructions</h2>
           <div className="container-info">
             <p>
-              {recipieDetails.strInstructions}
+              {recipieDetails.inuctions}
             </p>
           </div>
         </div>

@@ -1,23 +1,22 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { getFoodBy, searchFirstLetter } from '../services/foodAPI';
 import Header from '../components/Header';
 import foodContext from '../context/FoodContext';
 import './foods.css';
 import Card from '../components/Card';
-// import useResultAPIs from '../services/combinerAPIs';
+import useResultAPIs from '../services/combinerAPIs';
 
 export default function Foods() {
-  const { searchBar, typeResult } = useContext(foodContext);
+  const { searchBar } = useContext(foodContext);
   const [resultSearchBar, setResultSearchBar] = useState([]);
-  // const resultAPI = useResultAPIs('foods');
+  const { getByFirstLetter, getBy } = useResultAPIs('foods');
 
   const history = useHistory();
 
   useEffect(() => {
     (async () => {
-      const result = await searchFirstLetter('c');
+      const result = await getByFirstLetter('c');
       setResultSearchBar(result.slice(0, +('12')));
     })();
   }, []);
@@ -27,13 +26,13 @@ export default function Foods() {
       global.alert('Your search must have only 1 (one) character');
     } else {
       (async () => {
-        setResultSearchBar(await getFoodBy(searchBar.input, searchBar.radio));
+        setResultSearchBar(await getBy(searchBar.input, searchBar.radio));
       })();
     }
   }, [searchBar]);
 
   if (resultSearchBar.length === 1) {
-    history.push(`/${typeResult}/${resultSearchBar[0].idMeal}`);
+    history.push(`/foods/${resultSearchBar[0].idrecipe}`);
   }
   return (
     <>
@@ -43,7 +42,7 @@ export default function Foods() {
         {resultSearchBar.map((recipie, index) => (
           <Card
             { ...recipie }
-            key={ recipie.idMeal }
+            key={ recipie.idrecipe }
             index={ index }
           />
         ))}

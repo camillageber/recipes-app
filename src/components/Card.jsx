@@ -6,7 +6,7 @@ import foodContext from '../context/FoodContext';
 
 const INDEX_DEFAULT = -1;
 
-export default function Card({ strMealThumb, strMeal, idMeal, index = INDEX_DEFAULT }) {
+export default function Card({ recipethumb, recipe, idrecipe, index = INDEX_DEFAULT }) {
   const { typeResult } = useContext(foodContext);
   const history = useHistory();
 
@@ -14,11 +14,11 @@ export default function Card({ strMealThumb, strMeal, idMeal, index = INDEX_DEFA
     <button
       type="button"
       className="card"
-      onClick={ () => history.push(`/${typeResult}/${idMeal}`) }
+      onClick={ () => history.push(`/${typeResult}/${idrecipe}`) }
       data-testid={ index === INDEX_DEFAULT ? '' : `${index}-recipe-card` }
     >
       <img
-        src={ strMealThumb }
+        src={ recipethumb }
         alt="imagem da receita"
         data-testid={ index === +('-1') ? '' : `${index}-card-img` }
       />
@@ -26,7 +26,7 @@ export default function Card({ strMealThumb, strMeal, idMeal, index = INDEX_DEFA
         <h2
           data-testid={ index === +('-1') ? '' : `${index}-card-name` }
         >
-          {strMeal}
+          {recipe}
         </h2>
       </div>
     </button>
@@ -34,9 +34,9 @@ export default function Card({ strMealThumb, strMeal, idMeal, index = INDEX_DEFA
 }
 
 Card.propTypes = {
-  strMeal: PropTypes.string.isRequired,
-  strMealThumb: PropTypes.string.isRequired,
-  idMeal: PropTypes.string.isRequired,
+  recipe: PropTypes.string.isRequired,
+  recipethumb: PropTypes.string.isRequired,
+  idrecipe: PropTypes.string.isRequired,
   index: PropTypes.number,
 };
 

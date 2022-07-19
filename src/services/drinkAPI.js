@@ -1,3 +1,5 @@
+import standardizeAPIResult from './standardizeAPIResult';
+
 /**
  * It takes a drink name as an argument, and returns an array of drinks that match that name
  * @param drinkName - The name of the drink you want to search for.
@@ -9,7 +11,9 @@ export async function searchDrinkByName(drinkName) {
     .then((response) => response.json())
     .then((response) => response.drinks);
 
-  return result;
+  const newResult = await result.map((recipe) => standardizeAPIResult(recipe));
+
+  return newResult;
 }
 
 /**
@@ -18,10 +22,11 @@ export async function searchDrinkByName(drinkName) {
  * @returns An array of objects.
  */
 export async function searchFirstLetter(firstLetter) {
-  const url = `https://www.themealdb.com/api/json/v1/1/search.php?f=${firstLetter}`;
+  const url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${firstLetter}`;
   const result = await fetch(url)
     .then((response) => response.json())
-    .then((response) => response.drinks);
+    .then((response) => response.drinks)
+    .then((response) => response.map((recipe) => standardizeAPIResult(recipe)));
 
   return result;
 }
@@ -34,9 +39,11 @@ export async function searchFirstLetter(firstLetter) {
  */
 export async function searchIngredientName(ingredient) {
   const url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?i=${ingredient}`;
+  console.log(url);
   const result = await fetch(url)
     .then((response) => response.json())
-    .then((response) => response.drinks);
+    .then((response) => response.drinks)
+    .then((response) => response.map((recipe) => standardizeAPIResult(recipe)));
 
   return result;
 }
@@ -50,10 +57,10 @@ export async function getAllDrinkDetailsById(id) {
   const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
   const result = await fetch(url)
     .then((response) => response.json())
-    .then((response) => response.drinks);
+    .then((response) => response.drinks[0])
+    .then((response) => standardizeAPIResult(response));
 
-  result[0].strMealThumbPreview = `${result[0].strMealThumb}/preview`;
-  return result[0];
+  return result;
 }
 
 /**
@@ -67,8 +74,9 @@ export async function getAllIngredientDetailsById(idIngredient) {
     .then((response) => response.json())
     .then((response) => response.drinks);
 
-  result[0].strMealThumbPreview = `${result[0].strMealThumb}/preview`;
-  return result[0];
+  const newResult = standardizeAPIResult(await result);
+
+  return newResult;
 }
 
 /**
@@ -120,7 +128,9 @@ export async function getByDrinkIngredient(Ingredient) {
     .then((response) => response.drinks)
     .catch((e) => console.log(`error ${e}`));
 
-  return result;
+  const newResult = await result.map((recipe) => standardizeAPIResult(recipe));
+
+  return newResult;
 }
 
 /**
@@ -134,7 +144,9 @@ export async function getByCategory(Category) {
     .then((response) => response.drinks)
     .catch((e) => console.log(`error ${e}`));
 
-  return result;
+  const newResult = await result.map((recipe) => standardizeAPIResult(recipe));
+
+  return newResult;
 }
 
 /**
@@ -164,7 +176,9 @@ export async function getByAlcoholic(isAlcoholic) {
     .then((response) => response.drinks)
     .catch((e) => console.log(`error ${e}`));
 
-  return result;
+  const newResult = await result.map((recipe) => standardizeAPIResult(recipe));
+
+  return newResult;
 }
 
 /**
@@ -178,13 +192,13 @@ export async function getDrinkBy(dataFilter, filter) {
   case 'a':
     return getByAlcoholic(dataFilter);
   case 'i':
-    return searchIngredientName(dataFilter);
+    return getByDrinkIngredient(dataFilter);
   case 'c':
     return getByCategory(dataFilter);
   case 's':
     return searchDrinkByName(dataFilter);
   case 'f':
-    return searchDrinkLetter(dataFilter);
+    return searchFirstLetter(dataFilter);
   case 'g':
     return getByGlass(dataFilter);
   default:
