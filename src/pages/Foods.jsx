@@ -6,13 +6,12 @@ import Header from '../components/Header';
 import foodContext from '../context/FoodContext';
 import './foods.css';
 import Card from '../components/Card';
-import useResultAPIs from '../hooks/useResultAPIs';
+// import useResultAPIs from '../services/combinerAPIs';
 
 export default function Foods() {
   const { searchBar, typeResult } = useContext(foodContext);
   const [resultSearchBar, setResultSearchBar] = useState([]);
-  const resultAPI = useResultAPIs('foods');
-  console.log(resultAPI);
+  // const resultAPI = useResultAPIs('foods');
 
   const history = useHistory();
 

@@ -2,7 +2,8 @@ import * as foodAPI from './foodAPI';
 import * as drinkAPI from './drinkAPI';
 
 /**
- * It returns an object with all the API functions that are used in the app
+ * It returns an object with the same keys, but the values are different depending on the type of
+ * result
  * @param typeResult - This is the type of result you want to get. It can be either 'foods' or
  * 'drinks'.
  * @returns An object with the following properties:

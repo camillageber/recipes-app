@@ -1,3 +1,5 @@
+import standardizeAPIResult from './standardizeAPIResult';
+
 /**
  * It takes a meal name as an argument, and returns an array of meals that match the name
  * @param mealName - The name of the meal you want to search for.
@@ -9,7 +11,9 @@ export async function searchMealByName(mealName) {
     .then((response) => response.json())
     .then((response) => response.meals);
 
-  return result;
+  const newResult = await result.map((recipe) => standardizeAPIResult(recipe));
+
+  return newResult;
 }
 
 /**
@@ -23,7 +27,9 @@ export async function searchFirstLetter(firstLetter) {
     .then((response) => response.json())
     .then((response) => response.meals);
 
-  return result;
+  const newResult = await result.map((recipe) => standardizeAPIResult(recipe));
+
+  return newResult;
 }
 
 /**
@@ -37,8 +43,9 @@ export async function getAllMealDetailsById(id) {
     .then((response) => response.json())
     .then((response) => response.meals);
 
-  result[0].strMealThumbPreview = `${result[0].strMealThumb}/preview`;
-  return result[0];
+  const newResult = await standardizeAPIResult(result);
+
+  return newResult;
 }
 
 /**
@@ -80,7 +87,9 @@ export async function getByMainIngredient(Ingredient) {
     .then((response) => response.meals)
     .catch((e) => console.log(`error ${e}`));
 
-  return result;
+  const newResult = await result.map((recipe) => standardizeAPIResult(recipe));
+
+  return newResult;
 }
 
 /**
@@ -95,7 +104,9 @@ export async function getByCategory(Category) {
     .then((response) => response.meals)
     .catch((e) => console.log(`error ${e}`));
 
-  return result;
+  const newResult = await result.map((recipe) => standardizeAPIResult(recipe));
+
+  return newResult;
 }
 
 /**
@@ -110,7 +121,9 @@ export async function getByArea(Area) {
     .then((response) => response.meals)
     .catch((e) => console.log(`error ${e}`));
 
-  return result;
+  const newResult = await result.map((recipe) => standardizeAPIResult(recipe));
+
+  return newResult;
 }
 
 /**
