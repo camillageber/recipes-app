@@ -7,5 +7,9 @@ export default function Svg({ src, testId }) {
 
 Svg.propTypes = {
   src: PropTypes.string.isRequired,
-  testId: PropTypes.string.isRequired,
+  testId: PropTypes.string,
+};
+
+Svg.defaultProps = {
+  testId: null,
 };

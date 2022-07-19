@@ -12,6 +12,7 @@ import FavoriteRecipes from './pages/FavoriteRecipes';
 import FoodProvider from './context/FoodProvider';
 
 import './App.css';
+import Card from './components/Card';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/profile" component={ Profile } />
         <Route path="/done-recipes" component={ DoneRecipes } />
         <Route path="/favorite-recipes" component={ FavoriteRecipes } />
+        <Route path="/test" component={ Card } />
       </Switch>
     </FoodProvider>
   );
