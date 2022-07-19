@@ -1,5 +1,11 @@
 import standardizeAPIResult from './standardizeAPIResult';
 
+function alert(result) {
+  if (result.length === 0) {
+    global.alert('Sorry, we haven\'t found any recipes for these filters.');
+  }
+}
+
 /**
  * It takes a meal name as an argument, and returns an array of meals that match the name
  * @param mealName - The name of the meal you want to search for.
@@ -9,11 +15,12 @@ export async function searchMealByName(mealName) {
   const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${mealName}`;
   const result = await fetch(url)
     .then((response) => response.json())
-    .then((response) => response.meals);
+    .then((response) => response.meals)
+    .then((response) => (!response ? []
+      : response.map((recipe) => standardizeAPIResult(recipe))));
 
-  const newResult = await result.map((recipe) => standardizeAPIResult(recipe));
-
-  return newResult;
+  alert(result);
+  return result;
 }
 
 /**
@@ -23,13 +30,16 @@ export async function searchMealByName(mealName) {
  */
 export async function searchFirstLetter(firstLetter) {
   const url = `https://www.themealdb.com/api/json/v1/1/search.php?f=${firstLetter}`;
+  console.log(url);
   const result = await fetch(url)
     .then((response) => response.json())
-    .then((response) => response.meals);
+    .then((response) => response.meals)
+    .then((response) => (!response ? []
+      : response.map((recipe) => standardizeAPIResult(recipe))));
 
-  const newResult = await result.map((recipe) => standardizeAPIResult(recipe));
+  alert(result);
 
-  return newResult;
+  return result;
 }
 
 /**
@@ -39,6 +49,7 @@ export async function searchFirstLetter(firstLetter) {
  */
 export async function getAllMealDetailsById(id) {
   const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
+  console.log(url);
   const result = await fetch(url)
     .then((response) => response.json())
     .then((response) => response.meals[0]);
@@ -82,14 +93,16 @@ export async function getAllCategoriesAreaIngredients() {
  */
 export async function getByMainIngredient(Ingredient) {
   const url = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${Ingredient}`;
+  console.log(url);
   const result = await fetch(url)
     .then((response) => response.json())
     .then((response) => response.meals)
-    .catch((e) => console.log(`error ${e}`));
+    .then((response) => (!response ? []
+      : response.map((recipe) => standardizeAPIResult(recipe))));
 
-  const newResult = await result.map((recipe) => standardizeAPIResult(recipe));
+  alert(result);
 
-  return newResult;
+  return result;
 }
 
 /**
@@ -99,6 +112,7 @@ export async function getByMainIngredient(Ingredient) {
  */
 export async function getByCategory(Category) {
   const url = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${Category}`;
+  console.log(url);
   const result = await fetch(url)
     .then((response) => response.json())
     .then((response) => response.meals)
@@ -116,6 +130,7 @@ export async function getByCategory(Category) {
  */
 export async function getByArea(Area) {
   const url = `https://www.themealdb.com/api/json/v1/1/filter.php?a=${Area}`;
+  console.log(url);
   const result = await fetch(url)
     .then((response) => response.json())
     .then((response) => response.meals)

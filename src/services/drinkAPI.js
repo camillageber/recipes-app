@@ -1,5 +1,11 @@
 import standardizeAPIResult from './standardizeAPIResult';
 
+function alert(result) {
+  if (result.length === 0) {
+    global.alert('Sorry, we haven\'t found any recipes for these filters.');
+  }
+}
+
 /**
  * It takes a drink name as an argument, and returns an array of drinks that match that name
  * @param drinkName - The name of the drink you want to search for.
@@ -9,11 +15,13 @@ export async function searchDrinkByName(drinkName) {
   const url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${drinkName}`;
   const result = await fetch(url)
     .then((response) => response.json())
-    .then((response) => response.drinks);
+    .then((response) => response.drinks)
+    .then((response) => (!response ? []
+      : response.map((recipe) => standardizeAPIResult(recipe))));
 
-  const newResult = await result.map((recipe) => standardizeAPIResult(recipe));
+  alert(result);
 
-  return newResult;
+  return result;
 }
 
 /**
@@ -26,7 +34,10 @@ export async function searchFirstLetter(firstLetter) {
   const result = await fetch(url)
     .then((response) => response.json())
     .then((response) => response.drinks)
-    .then((response) => response.map((recipe) => standardizeAPIResult(recipe)));
+    .then((response) => (!response ? []
+      : response.map((recipe) => standardizeAPIResult(recipe))));
+
+  alert(result);
 
   return result;
 }
@@ -55,6 +66,7 @@ export async function searchIngredientName(ingredient) {
  */
 export async function getAllDrinkDetailsById(id) {
   const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
+  console.log(url);
   const result = await fetch(url)
     .then((response) => response.json())
     .then((response) => response.drinks[0])
@@ -70,6 +82,7 @@ export async function getAllDrinkDetailsById(id) {
  */
 export async function getAllIngredientDetailsById(idIngredient) {
   const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?iid=${idIngredient}`;
+  console.log(url);
   const result = await fetch(url)
     .then((response) => response.json())
     .then((response) => response.drinks);
@@ -123,14 +136,16 @@ export async function getAllCategoriesAlcoholicGlassesIngredients() {
  */
 export async function getByDrinkIngredient(Ingredient) {
   const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${Ingredient}`;
+  console.log(url);
   const result = await fetch(url)
     .then((response) => response.json())
     .then((response) => response.drinks)
-    .catch((e) => console.log(`error ${e}`));
+    .then((response) => (!response ? []
+      : response.map((recipe) => standardizeAPIResult(recipe))));
 
-  const newResult = await result.map((recipe) => standardizeAPIResult(recipe));
+  alert(result);
 
-  return newResult;
+  return result;
 }
 
 /**
@@ -139,6 +154,7 @@ export async function getByDrinkIngredient(Ingredient) {
  */
 export async function getByCategory(Category) {
   const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${Category}`;
+  console.log(url);
   const result = await fetch(url)
     .then((response) => response.json())
     .then((response) => response.drinks)
@@ -155,7 +171,7 @@ export async function getByCategory(Category) {
  * @returns An array of objects.
  */
 export async function getByGlass(glass) {
-  const url = `www.thecocktaildb.com/api/json/v1/1/filter.php?g=${glass}`;
+  const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?g=${glass}`;
   const result = await fetch(url)
     .then((response) => response.json())
     .then((response) => response.drinks)
@@ -170,7 +186,7 @@ export async function getByGlass(glass) {
  * @returns An array of objects.
  */
 export async function getByAlcoholic(isAlcoholic) {
-  const url = `www.thecocktaildb.com/api/json/v1/1/filter.php?a=${isAlcoholic}`;
+  const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=${isAlcoholic}`;
   const result = await fetch(url)
     .then((response) => response.json())
     .then((response) => response.drinks)

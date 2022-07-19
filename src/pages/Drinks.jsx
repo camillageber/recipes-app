@@ -1,54 +1,24 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useContext, useEffect } from 'react';
 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import foodContext from '../context/FoodContext';
 import './foods.css';
-import Card from '../components/Card';
-import useResultAPIs from '../services/combinerAPIs';
+
+import Recipes from '../components/Recipes';
+import foodContext from '../context/FoodContext';
 
 export default function Foods() {
-  const { searchBar, typeResult, setTypeResult } = useContext(foodContext);
-  const [resultSearchBar, setResultSearchBar] = useState([]);
-  const { getByFirstLetter, getBy } = useResultAPIs(typeResult);
-
-  const history = useHistory();
+  const { setTypeResult } = useContext(foodContext);
 
   useEffect(() => {
     setTypeResult('drinks');
-    (async () => {
-      const result = await getByFirstLetter('c');
-      setResultSearchBar(result.slice(0, +('12')));
-    })();
-  }, [typeResult]);
+  }, []);
 
-  useEffect(() => {
-    if ((searchBar.input.length) > 1 && searchBar.radio === 'f') {
-      global.alert('Your search must have only 1 (one) character');
-    } else {
-      (async () => {
-        setResultSearchBar(await getBy(searchBar.input, searchBar.radio));
-      })();
-    }
-  }, [searchBar, typeResult]);
-
-  if (resultSearchBar.length === 1) {
-    history.push(`/drinks/${resultSearchBar[0].idrecipe}`);
-  }
   return (
     <>
       <Header pageTitle="Drinks" />
       <h1>Drinks</h1>
-      <div className="container-cards">
-        {resultSearchBar.map((recipie, index) => (
-          <Card
-            { ...recipie }
-            key={ recipie.idrecipe }
-            index={ index }
-          />
-        ))}
-      </div>
+      <Recipes />
       <Footer />
     </>
   );
