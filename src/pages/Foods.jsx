@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { getFoodBy } from '../services/foodAPI';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import foodContext from '../context/FoodContext';
 
 export default function Foods() {
@@ -22,6 +23,7 @@ export default function Foods() {
     <>
       <Header pageTitle="Foods" />
       <h1>Foods</h1>
+      <Footer />
     </>
   );
 }

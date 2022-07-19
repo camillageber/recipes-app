@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import foodContext from '../context/FoodContext';
 import { getDrinkBy } from '../services/drinkAPI';
 
@@ -22,6 +23,7 @@ export default function Drinks() {
     <>
       <Header pageTitle="Drinks" />
       <h1>Drinks</h1>
+      <Footer />
     </>
   );
 }
