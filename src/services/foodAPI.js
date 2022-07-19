@@ -11,8 +11,14 @@ export async function searchMealByName(mealName) {
 
   return result;
 }
-export async function searchFirstLetter(mealName) {
-  const url = `https://www.themealdb.com/api/json/v1/1/search.php?f=${mealName}`;
+
+/**
+ * It takes a letter as an argument, and returns an array of meals whose names start with that letter
+ * @param firstLetter - The first letter of the meal you want to search for.
+ * @returns An array of objects.
+ */
+export async function searchFirstLetter(firstLetter) {
+  const url = `https://www.themealdb.com/api/json/v1/1/search.php?f=${firstLetter}`;
   const result = await fetch(url)
     .then((response) => response.json())
     .then((response) => response.meals);
@@ -21,7 +27,7 @@ export async function searchFirstLetter(mealName) {
 }
 
 /**
- * It takes the id of a meal, fetches the data from the API, and returns an object with the data
+ * It takes an id as an argument, fetches the data from the API, and returns the meal details
  * @param id - The id of the meal you want to get the details for.
  * @returns An object with the meal details.
  */
@@ -37,7 +43,7 @@ export async function getAllMealDetailsById(id) {
 
 /**
  * It fetches the data from the API and returns the data in an object
- * @returns An object with 3 properties: CategoriesList, AreaList, IngredientsList.
+ * @returns An object with three properties: CategoriesList, AreaList, and IngredientsList.
  */
 export async function getAllCategoriesAreaIngredients() {
   const urlCategories = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
@@ -63,7 +69,7 @@ export async function getAllCategoriesAreaIngredients() {
 }
 
 /**
- * It takes an ingredient as a parameter, fetches the data from the API, and returns the data
+ * It takes in a string as an argument, and returns an array of objects
  * @param Ingredient - The main ingredient of the meal.
  * @returns An array of objects.
  */
@@ -76,10 +82,11 @@ export async function getByMainIngredient(Ingredient) {
 
   return result;
 }
+
 /**
  * It takes a category as a parameter, fetches the data from the API, and returns the data
- * @param Category - The category of the meal you want to filter by.
- * @returns An array of objects.
+ * @param Category - The category of the meal.
+ * @returns the result of the fetch request.
  */
 export async function getByCategory(Category) {
   const url = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${Category}`;
@@ -90,6 +97,7 @@ export async function getByCategory(Category) {
 
   return result;
 }
+
 /**
  * It takes an area as a parameter, fetches the data from the API, and returns the data
  * @param Area - String
@@ -106,23 +114,25 @@ export async function getByArea(Area) {
 }
 
 /**
- * It takes a dateFilter and a filter as parameters, and returns an array of meals
- * @param dataFilter - The date you want to filter by.
- * @param filter - a = Area, i = Main Ingredient, c = Category
- * @returns An array of objects.
+ * It takes in a filter and a dataFilter, and returns an array of food objects
+ * @param dataFilter - the value of the filter
+ * @param filter - a, i, c, s, f
+ * @returns An array of objects
  */
 export async function getFoodBy(dataFilter, filter) {
-  if (!'aicsf'.includes(filter) || !dataFilter) return [];
-  if (filter === 's') {
+  if (!dataFilter) return [];
+  switch (filter) {
+  case 'a':
+    return getByArea(dataFilter);
+  case 'i':
+    return getByMainIngredient(dataFilter);
+  case 'c':
+    return getByCategory(dataFilter);
+  case 's':
     return searchMealByName(dataFilter);
-  } if (filter === 'f') {
+  case 'f':
     return searchFirstLetter(dataFilter);
+  default:
+    return [];
   }
-  const url = `https://www.themealdb.com/api/json/v1/1/filter.php?${filter}=${dataFilter}`;
-  const result = await fetch(url)
-    .then((response) => response.json())
-    .then((response) => response)
-    .catch((e) => console.log(`error ${e}`));
-
-  return result;
 }

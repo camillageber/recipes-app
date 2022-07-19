@@ -1,14 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+
 import { getFoodBy, searchFirstLetter } from '../services/foodAPI';
 import Header from '../components/Header';
 import foodContext from '../context/FoodContext';
 import './foods.css';
 import Card from '../components/Card';
+import useResultAPIs from '../hooks/useResultAPIs';
 
 export default function Foods() {
   const { searchBar, typeResult } = useContext(foodContext);
   const [resultSearchBar, setResultSearchBar] = useState([]);
+  const resultAPI = useResultAPIs('foods');
+  console.log(resultAPI);
 
   const history = useHistory();
 
