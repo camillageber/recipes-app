@@ -28,5 +28,7 @@ export default function Profile({ history }) {
 }
 
 Profile.propTypes = {
-  history: PropTypes.node.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
 };
