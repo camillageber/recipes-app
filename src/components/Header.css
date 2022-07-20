@@ -3,6 +3,7 @@ header {
   display: flex;
   gap: 80%;
   justify-content: center;
+  margin-bottom: 0.5rem;
   padding: 0.5rem;
   position: relative;
 }
@@ -36,5 +37,54 @@ header .search img {
 }
 
 .green {
-  color: #28a745;
-} 
+  color: rgba(23, 177, 23, 1);
+}
+
+.conteinerSearch {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.5rem;
+}
+
+.conteinerSearch .input-search {
+  border: 1px solid black;
+  border-radius: 0.3rem;
+  display: block;
+  outline: none;
+  padding: 0.3rem;
+  width: 95%;
+}
+
+.conteinerSearch .conteinerRadio {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 0.5rem 0;
+  width: 95%;
+}
+
+.conteinerSearch .conteinerRadio label {
+  font-weight: 600;
+}
+
+.conteinerSearch .conteinerRadio label input {
+  margin-right: 0.3rem;
+}
+
+.conteinerSearch button {
+  border: none;
+  border-radius: 0.3rem;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  font-weight: 600;
+  color: white;
+  margin-bottom: 1rem;
+  padding: 0.3rem 0.8rem;
+}
+
+.conteinerSearch .red {
+  background-color: rgba(255, 0, 0, 0.8);
+}
+
+.conteinerSearch .green {
+  background-color: rgba(23, 177, 23, 0.8);
+}

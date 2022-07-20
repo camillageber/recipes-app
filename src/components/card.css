@@ -3,14 +3,14 @@
   background-color: rgb(238, 238, 238);
   border: none;
   border-radius: 6px;
-  box-shadow: 0 0 40px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   height: 172px;
   justify-content: space-evenly;
   text-align: center;
-  width: 180px;
+  width: 172px;
 }
 
 .card img {

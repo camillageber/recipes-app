@@ -34,7 +34,7 @@ export default function Header({ pageTitle, color }) {
         </button>) }
         { onRedirect && <Redirect to="/profile" /> }
       </header>
-      {togglesearch && <SearchBar />}
+      {togglesearch && <SearchBar color={ color } />}
     </>
   );
 }

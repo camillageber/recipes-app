@@ -17,7 +17,6 @@ export default function Foods() {
   return (
     <>
       <Header pageTitle="Foods" color="red" />
-      <h1>Foods</h1>
       <Recipes />
       <Footer />
     </>
