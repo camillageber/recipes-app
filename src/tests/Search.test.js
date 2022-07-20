@@ -37,5 +37,7 @@ describe('Testando o SearchBar', () => {
     expect(input).toBeInTheDocument();
     userEvent.type(screen.getByTestId('search-input'), 'lalaland');
     expect(input.value).toBe(inputState);
+    const button = screen.getByTestId('exec-search-btn');
+    userEvent.click(button);
   });
 });
