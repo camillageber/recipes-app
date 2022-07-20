@@ -7,7 +7,7 @@ import FoodProvider from '../context/FoodProvider';
 
 describe('Testando o header', () => {
   test('Ao clicar no botão perfil a pessoa é redirecionada para o perfil', () => {
-    const {history} = renderWithRouter(<FoodProvider><Header pageTitle='Profile'/></FoodProvider>);
+    const {history} = renderWithRouter(<Header pageTitle='Profile'/>, '/profile');
     const buttonToProfile = screen.getByAltText(/icon/i);
     expect(buttonToProfile).toBeInTheDocument();
     
@@ -20,7 +20,7 @@ describe('Testando o header', () => {
   });
 
   test('testa botão de busca', () => {
-    const {history} = renderWithRouter(<FoodProvider><Header pageTitle='Foods'/></FoodProvider>);
+    const {history} = renderWithRouter(<Header pageTitle='Foods'/>, '/foods');
     const buttonSearch = screen.getByTestId('search-top-btn');
 
     userEvent.click(buttonSearch);
