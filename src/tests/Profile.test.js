@@ -15,7 +15,7 @@ describe('Testa a tela Profile', () => {
   });
 
   test('Verifica se há o botão "Done Recipes" na tela e redireciona para a página correta', () => {
-    render(<Profile />)
+   const {history} = renderWithRouter(<Profile />)
 
 
     const btnDoneRecipes = screen.getByRole('button', { name: /done recipes/i });
@@ -23,14 +23,12 @@ describe('Testa a tela Profile', () => {
 
     userEvent.click(btnDoneRecipes);
 
-    // expect(history.location.pathname).toEqual('/done-recipes')
+    const path = history.location.pathname;
+    console.log(path)
+    
+    history.push('/done-recipes')
+    expect(path).toEqual('/done-recipes')
 
-    // history.push('/done-recipes')
-
-    // const titleEl = screen.getByRole('heading', { name: /donerecipes/i, level: 1 });
-    // expect(titleEl).toBeInTheDocument();
-
-    // userEvent.click(btnDoneRecipes);
   });
 });
 
