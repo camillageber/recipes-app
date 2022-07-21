@@ -1,11 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import foodContext from './FoodContext';
 
 function Provider({ children }) {
+  const [searchBar, setSearchBar] = useState({ input: '', radio: '' });
+
+  function handleSearchBar({ inputValue, radioValue }) {
+    setSearchBar({ input: inputValue, radio: radioValue });
+  }
+
+  const state = {
+    handleSearchBar,
+    searchBar,
+  };
+
   return (
-    <foodContext.Provider value={ { nome: 'Xablau' } }>
+    <foodContext.Provider value={ { ...state } }>
       {children}
     </foodContext.Provider>
   );

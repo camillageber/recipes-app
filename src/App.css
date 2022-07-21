@@ -4,3 +4,8 @@
   margin: 0;
   padding: 0;
 }
+
+.fixed {
+  bottom: 0;
+  position: fixed;
+}

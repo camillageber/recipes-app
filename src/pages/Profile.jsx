@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
+import Footer from '../components/Footer';
 import Header from '../components/Header';
+import '../components/Header.css';
 
 export default function Profile() {
   const history = useHistory();
@@ -25,6 +27,7 @@ export default function Profile() {
         Favorite Recipes
       </button>
       <button type="button" data-testid="profile-logout-btn">Logout</button>
+      <Footer />
     </>
   );
 }

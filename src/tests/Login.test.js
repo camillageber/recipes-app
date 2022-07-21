@@ -8,7 +8,7 @@ import App from '../App';
 describe('Testa a tela de Login', () => {
   test('testa os inputs e o botão', () => {
     // acessar os elementos da tela
-    render(<Login />);
+    renderWithRouter(<App />);
     const inputEmail = screen.getByTestId("email-input");
     const inputPassword = screen.getByTestId("password-input");
     const buttonEnter = screen.getByTestId("login-submit-btn");
