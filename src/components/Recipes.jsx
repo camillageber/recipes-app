@@ -3,12 +3,14 @@ import { useHistory } from 'react-router-dom';
 import foodContext from '../context/FoodContext';
 import useResultAPIs from '../services/combinerAPIs';
 import Card from './Card';
+import Category from './Category';
 
 function Recipes() {
   const { searchBar, typeResult } = useContext(foodContext);
   const [resultSearchBar, setResultSearchBar] = useState([]);
   const history = useHistory();
   const { location: { pathname } } = history;
+  console.log(pathname.replace('/', ''));
   const { getByName, getBy } = useResultAPIs(pathname.replace('/', ''));
 
   useEffect(() => {
@@ -35,15 +37,18 @@ function Recipes() {
     history.push(`${pathname}/${resultSearchBar[0].idrecipe}`);
   }
   return (
-    <div className="container-cards">
-      {resultSearchBar.map((recipie, index) => (
-        <Card
-          { ...recipie }
-          key={ recipie.idrecipe }
-          index={ index }
-        />
-      ))}
-    </div>
+    <>
+      {resultSearchBar.length > 0 && <Category pathname={ pathname.replace('/', '') } />}
+      <div className="container-cards">
+        {resultSearchBar.map((recipie, index) => (
+          <Card
+            { ...recipie }
+            key={ recipie.idrecipe }
+            index={ index }
+          />
+        ))}
+      </div>
+    </>
   );
 }
 

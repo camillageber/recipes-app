@@ -1,7 +1,6 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Svg from '../components/Svg';
-import foodContext from '../context/FoodContext';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import useResultAPIs from '../services/combinerAPIs';
@@ -10,11 +9,11 @@ import useResultAPIs from '../services/combinerAPIs';
 import './details.css';
 
 export default function Details() {
-  const { typeResult } = useContext(foodContext);
   const [recipieDetails, setRecipieDetails] = useState({});
   const [ingredients, setIngredients] = useState([]);
-  const { getById } = useResultAPIs(typeResult);
   const history = useHistory();
+  const { location: { pathname } } = history;
+  const { getById } = useResultAPIs(pathname.split('/')[1]);
 
   const getIngredients = (recipe) => {
     const newIngredients = Object.entries(recipe)
@@ -32,7 +31,6 @@ export default function Details() {
   };
 
   useEffect(() => {
-    const { location: { pathname } } = history;
     const id = pathname.split('/')[2];
     (async () => {
       const result = await getById(id);

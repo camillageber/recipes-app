@@ -130,6 +130,19 @@ export async function getAllCategoriesAlcoholicGlassesIngredients() {
 }
 
 /**
+ * It fetches the list of categories from the API and returns it
+ * @returns An array of objects.
+ */
+export async function getAllCategories() {
+  const urlCategories = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
+  const categoriesList = await fetch(urlCategories)
+    .then((response) => response.json())
+    .then((response) => response.drinks);
+
+  return categoriesList;
+}
+
+/**
  * It takes an ingredient as a parameter, and returns a list of drinks that contain that ingredient
  * @param Ingredient - The ingredient you want to search for.
  * @returns An array of objects.
