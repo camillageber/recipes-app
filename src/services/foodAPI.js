@@ -1,3 +1,11 @@
+import standardizeAPIResult from './standardizeAPIResult';
+
+function alert(result) {
+  if (result.length === 0) {
+    global.alert('Sorry, we haven\'t found any recipes for these filters.');
+  }
+}
+
 /**
  * It takes a meal name as an argument, and returns an array of meals that match the name
  * @param mealName - The name of the meal you want to search for.
@@ -7,89 +15,122 @@ export async function searchMealByName(mealName) {
   const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${mealName}`;
   const result = await fetch(url)
     .then((response) => response.json())
-    .then((response) => response.meals);
+    .then((response) => response.meals)
+    .then((response) => (!response ? []
+      : response.map((recipe) => standardizeAPIResult(recipe))));
 
+  alert(result);
   return result;
 }
-export async function searchFirstLetter(mealName) {
-  const url = `https://www.themealdb.com/api/json/v1/1/search.php?f=${mealName}`;
+
+/**
+ * It takes a letter as an argument, and returns an array of meals whose names start with that letter
+ * @param firstLetter - The first letter of the meal you want to search for.
+ * @returns An array of objects.
+ */
+export async function searchFirstLetter(firstLetter) {
+  const url = `https://www.themealdb.com/api/json/v1/1/search.php?f=${firstLetter}`;
+  console.log(url);
   const result = await fetch(url)
     .then((response) => response.json())
-    .then((response) => response.meals);
+    .then((response) => response.meals)
+    .then((response) => (!response ? []
+      : response.map((recipe) => standardizeAPIResult(recipe))));
+
+  alert(result);
 
   return result;
 }
 
 /**
- * It takes the id of a meal, fetches the data from the API, and returns an object with the data
+ * It takes an id as an argument, fetches the data from the API, and returns the meal details
  * @param id - The id of the meal you want to get the details for.
  * @returns An object with the meal details.
  */
 export async function getAllMealDetailsById(id) {
   const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
+  console.log(url);
   const result = await fetch(url)
     .then((response) => response.json())
-    .then((response) => response.meals);
+    .then((response) => response.meals[0]);
 
-  result[0].strMealThumbPreview = `${result[0].strMealThumb}/preview`;
-  return result[0];
+  const newResult = standardizeAPIResult(result);
+
+  return newResult;
 }
 
 /**
  * It fetches the data from the API and returns the data in an object
- * @returns An object with 3 properties: CategoriesList, AreaList, IngredientsList.
+ * @returns An object with three properties: CategoriesList, AreaList, and IngredientsList.
  */
 export async function getAllCategoriesAreaIngredients() {
   const urlCategories = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
-  const CategoriesList = await fetch(urlCategories)
+  const categoriesList = await fetch(urlCategories)
     .then((response) => response.json())
     .then((response) => response.meals);
 
   const urlArea = 'https://www.themealdb.com/api/json/v1/1/list.php?a=list';
-  const AreaList = await fetch(urlArea)
+  const areaList = await fetch(urlArea)
     .then((response) => response.json())
     .then((response) => response.meals);
 
   const urlIngredients = 'https://www.themealdb.com/api/json/v1/1/list.php?i=list';
-  const IngredientsList = await fetch(urlIngredients)
+  const ingredientsList = await fetch(urlIngredients)
     .then((response) => response.json())
     .then((response) => response.meals);
 
   return {
-    CategoriesList,
-    AreaList,
-    IngredientsList,
+    categoriesList,
+    areaList,
+    ingredientsList,
   };
+}
+export async function getAllCategories() {
+  const urlCategories = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
+  const categoriesList = await fetch(urlCategories)
+    .then((response) => response.json())
+    .then((response) => response.meals);
+
+  return categoriesList;
 }
 
 /**
- * It takes an ingredient as a parameter, fetches the data from the API, and returns the data
+ * It takes in a string as an argument, and returns an array of objects
  * @param Ingredient - The main ingredient of the meal.
  * @returns An array of objects.
  */
 export async function getByMainIngredient(Ingredient) {
   const url = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${Ingredient}`;
+  console.log(url);
   const result = await fetch(url)
     .then((response) => response.json())
     .then((response) => response.meals)
-    .catch((e) => console.log(`error ${e}`));
+    .then((response) => (!response ? []
+      : response.map((recipe) => standardizeAPIResult(recipe))));
+
+  alert(result);
 
   return result;
 }
+
 /**
  * It takes a category as a parameter, fetches the data from the API, and returns the data
- * @param Category - The category of the meal you want to filter by.
- * @returns An array of objects.
+ * @param Category - The category of the meal.
+ * @returns the result of the fetch request.
  */
 export async function getByCategory(Category) {
   const url = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${Category}`;
+  console.log(url);
   const result = await fetch(url)
     .then((response) => response.json())
     .then((response) => response.meals)
     .catch((e) => console.log(`error ${e}`));
 
-  return result;
+  const newResult = await result.map((recipe) => standardizeAPIResult(recipe));
+
+  return newResult;
 }
+
 /**
  * It takes an area as a parameter, fetches the data from the API, and returns the data
  * @param Area - String
@@ -97,32 +138,37 @@ export async function getByCategory(Category) {
  */
 export async function getByArea(Area) {
   const url = `https://www.themealdb.com/api/json/v1/1/filter.php?a=${Area}`;
+  console.log(url);
   const result = await fetch(url)
     .then((response) => response.json())
     .then((response) => response.meals)
     .catch((e) => console.log(`error ${e}`));
 
-  return result;
+  const newResult = await result.map((recipe) => standardizeAPIResult(recipe));
+
+  return newResult;
 }
 
 /**
- * It takes a dateFilter and a filter as parameters, and returns an array of meals
- * @param dataFilter - The date you want to filter by.
- * @param filter - a = Area, i = Main Ingredient, c = Category
- * @returns An array of objects.
+ * It takes in a filter and a dataFilter, and returns an array of food objects
+ * @param dataFilter - the value of the filter
+ * @param filter - a, i, c, s, f
+ * @returns An array of objects
  */
 export async function getFoodBy(dataFilter, filter) {
-  if (!'aicsf'.includes(filter) || !dataFilter) return [];
-  if (filter === 's') {
+  if (!dataFilter) return [];
+  switch (filter) {
+  case 'a':
+    return getByArea(dataFilter);
+  case 'i':
+    return getByMainIngredient(dataFilter);
+  case 'c':
+    return getByCategory(dataFilter);
+  case 's':
     return searchMealByName(dataFilter);
-  } if (filter === 'f') {
+  case 'f':
     return searchFirstLetter(dataFilter);
+  default:
+    return [];
   }
-  const url = `https://www.themealdb.com/api/json/v1/1/filter.php?${filter}=${dataFilter}`;
-  const result = await fetch(url)
-    .then((response) => response.json())
-    .then((response) => response)
-    .catch((e) => console.log(`error ${e}`));
-
-  return result;
 }

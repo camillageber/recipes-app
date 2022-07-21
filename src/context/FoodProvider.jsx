@@ -4,14 +4,15 @@ import PropTypes from 'prop-types';
 import foodContext from './FoodContext';
 
 function Provider({ children }) {
-  const [searchBar, setSearchBar] = useState({ input: 'a', radio: 'f' });
+  const [searchBar, setSearchBar] = useState({ input: '', radio: '' });
 
   function handleSearchBar({ inputValue, radioValue }) {
     setSearchBar({ input: inputValue, radio: radioValue });
   }
 
   const state = {
-    handleSearchBar, searchBar,
+    handleSearchBar,
+    searchBar,
   };
 
   return (
