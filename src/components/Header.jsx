@@ -7,7 +7,6 @@ import icon from '../images/profileIcon.svg';
 import search from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
 import './Header.css';
-import Category from './Category';
 
 export default function Header({ pageTitle, color }) {
   const [onRedirect, setOnRedirect] = useState(false);
@@ -35,7 +34,7 @@ export default function Header({ pageTitle, color }) {
         </button>) }
         { onRedirect && <Redirect to="/profile" /> }
       </header>
-      {togglesearch ? <SearchBar color={ color } /> : <Category pathname={ pageTitle } />}
+      {togglesearch && <SearchBar color={ color } />}
     </>
   );
 }

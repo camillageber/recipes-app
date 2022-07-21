@@ -28,7 +28,7 @@ header .search img {
   border-bottom-left-radius: 0.3rem;
 }
 
-#title {
+[ id = 'title' ] {
   position: absolute;
 }
 
@@ -75,8 +75,8 @@ header .search img {
   border: none;
   border-radius: 0.3rem;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-  font-weight: 600;
   color: white;
+  font-weight: 600;
   margin-bottom: 1rem;
   padding: 0.3rem 0.8rem;
 }

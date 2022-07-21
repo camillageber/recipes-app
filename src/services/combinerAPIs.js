@@ -24,6 +24,7 @@ export default function useResultAPIs(typeResult) {
       getByIdIngredient: null,
       getByIngredient: foodAPI.getByMainIngredient,
       getByName: foodAPI.searchMealByName,
+      getAllCategories: foodAPI.getAllCategories,
     };
   } if (typeResult === 'drinks') {
     return {
@@ -38,6 +39,7 @@ export default function useResultAPIs(typeResult) {
       getByIdIngredient: drinkAPI.getAllIngredientDetailsById,
       getByIngredient: drinkAPI.getByDrinkIngredient,
       getByName: drinkAPI.searchDrinkByName,
+      getAllCategories: drinkAPI.getAllCategories,
     };
   }
   return null;

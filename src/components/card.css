@@ -16,8 +16,8 @@
 .card img {
   border-radius: 0.5rem;
   height: 100px;
-  width: 90%;
   object-fit: cover;
+  width: 90%;
 }
 
 .card h2 {

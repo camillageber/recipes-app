@@ -65,25 +65,33 @@ export async function getAllMealDetailsById(id) {
  */
 export async function getAllCategoriesAreaIngredients() {
   const urlCategories = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
-  const CategoriesList = await fetch(urlCategories)
+  const categoriesList = await fetch(urlCategories)
     .then((response) => response.json())
     .then((response) => response.meals);
 
   const urlArea = 'https://www.themealdb.com/api/json/v1/1/list.php?a=list';
-  const AreaList = await fetch(urlArea)
+  const areaList = await fetch(urlArea)
     .then((response) => response.json())
     .then((response) => response.meals);
 
   const urlIngredients = 'https://www.themealdb.com/api/json/v1/1/list.php?i=list';
-  const IngredientsList = await fetch(urlIngredients)
+  const ingredientsList = await fetch(urlIngredients)
     .then((response) => response.json())
     .then((response) => response.meals);
 
   return {
-    CategoriesList,
-    AreaList,
-    IngredientsList,
+    categoriesList,
+    areaList,
+    ingredientsList,
   };
+}
+export async function getAllCategories() {
+  const urlCategories = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
+  const categoriesList = await fetch(urlCategories)
+    .then((response) => response.json())
+    .then((response) => response.meals);
+
+  return categoriesList;
 }
 
 /**
