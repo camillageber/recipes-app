@@ -1,6 +1,8 @@
 .container-cards {
+  align-items: flex-start;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
-  row-gap: 12px;
+  gap: 0.8rem;
+  justify-content: space-evenly;
+  padding-bottom: 3.5rem;
 }
