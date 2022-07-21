@@ -1,5 +1,5 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 
@@ -29,8 +29,8 @@ export default function Profile() {
   );
 }
 
-// Profile.propTypes = {
-//   history: PropTypes.shape({
-//     push: PropTypes.func,
-//   }).isRequired,
-// };
+Profile.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
