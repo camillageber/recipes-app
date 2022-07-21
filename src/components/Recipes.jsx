@@ -6,11 +6,10 @@ import Card from './Card';
 import Category from './Category';
 
 function Recipes() {
-  const { searchBar, typeResult } = useContext(foodContext);
+  const { searchBar } = useContext(foodContext);
   const [resultSearchBar, setResultSearchBar] = useState([]);
   const history = useHistory();
   const { location: { pathname } } = history;
-  console.log(pathname.replace('/', ''));
   const { getByName, getBy } = useResultAPIs(pathname.replace('/', ''));
 
   useEffect(() => {
@@ -18,7 +17,7 @@ function Recipes() {
       const result = await getByName('');
       setResultSearchBar(result.slice(0, +('12')));
     })();
-  }, []);
+  }, [getByName]);
 
   useEffect(() => {
     if ((searchBar.input.length) > 1 && searchBar.radio === 'f') {
@@ -29,9 +28,7 @@ function Recipes() {
         setResultSearchBar(result?.slice(0, +('12')));
       })();
     }
-  }, [searchBar, typeResult]);
-
-  console.log(resultSearchBar);
+  }, [getBy, searchBar]);
 
   if (resultSearchBar.length === 1) {
     history.push(`${pathname}/${resultSearchBar[0].idrecipe}`);

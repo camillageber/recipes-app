@@ -10,19 +10,17 @@ export default function Category({ pathname }) {
 
   const { getAllCategories } = useResultAPIs(pathname);
 
-  const api = async () => {
-    let response = [];
-    response = await getAllCategories();
-    return setResult(response);
-  };
-
   useEffect(() => {
+    const api = async () => {
+      let response = [];
+      response = await getAllCategories();
+      return setResult(response);
+    };
     api();
-  }, []);
+  }, [getAllCategories]);
 
   const NUMBER = 5;
   const filtro = result?.slice(0, NUMBER);
-  console.log(filtro);
 
   return (
     <div>

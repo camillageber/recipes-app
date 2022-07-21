@@ -38,7 +38,7 @@ export default function Details() {
       setRecipieDetails(result);
       setIngredients(getIngredients(result));
     })();
-  }, []);
+  }, [getById, pathname]);
 
   if (!recipieDetails) return;
 
