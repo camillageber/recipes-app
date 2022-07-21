@@ -12,7 +12,7 @@ export default function Foods() {
 
   useEffect(() => {
     setTypeResult('drinks');
-  }, []);
+  });
 
   return (
     <>

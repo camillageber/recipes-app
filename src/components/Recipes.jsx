@@ -16,7 +16,7 @@ function Recipes() {
       const result = await getByName('');
       setResultSearchBar(result.slice(0, +('12')));
     })();
-  }, []);
+  }, [getByName]);
 
   useEffect(() => {
     if ((searchBar.input.length) > 1 && searchBar.radio === 'f') {
@@ -27,7 +27,7 @@ function Recipes() {
         setResultSearchBar(result?.slice(0, +('12')));
       })();
     }
-  }, [searchBar, typeResult]);
+  }, [searchBar, getBy, typeResult]);
 
   console.log(resultSearchBar);
 
