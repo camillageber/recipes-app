@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+
 import Card from '../components/Card';
 import Svg from '../components/Svg';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import useResultAPIs from '../services/combinerAPIs';
 
+
+import ButtonFav from '../components/ButtonFav';
+import ButtonShare from '../components/ButtonShare';
+import useResultAPIs from '../services/combinerAPIs';
 import './details.css';
 
 const getIngredients = (recipe) => {
@@ -28,6 +33,7 @@ export default function Details() {
   const [suggestionsRecipes, setSuggestionsRecipes] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const history = useHistory();
+  console.log(history);
   const { location: { pathname } } = history;
   const pathRecomendation = pathname.split('/')[1] === 'foods' ? 'drinks' : 'foods';
   const { getById } = useResultAPIs(pathname.split('/')[1]);
@@ -45,7 +51,6 @@ export default function Details() {
     })();
   }, [getById, getByName, pathname]);
 
-  console.log(Object.keys(recipieDetails).length > 0);
   if (Object.keys(recipieDetails).length === 0) return '';
 
   return (
@@ -74,8 +79,8 @@ export default function Details() {
             </p>
           </div>
           <div className="icons-card">
-            <Svg src={ shareIcon } />
-            <Svg src={ whiteHeartIcon } />
+            <ButtonShare />
+            <ButtonFav { ...recipieDetails } />
           </div>
         </div>
 

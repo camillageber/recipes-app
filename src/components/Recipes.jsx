@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import foodContext from '../context/FoodContext';
 import useResultAPIs from '../services/combinerAPIs';
@@ -6,16 +6,21 @@ import Card from './Card';
 import Category from './Category';
 
 function Recipes() {
-  const { searchBar } = useContext(foodContext);
+  const { searchBar, filterCategory } = useContext(foodContext);
+
   const [resultSearchBar, setResultSearchBar] = useState([]);
+
+  const mount = useRef();
+
   const history = useHistory();
   const { location: { pathname } } = history;
-  const { getByName, getBy } = useResultAPIs(pathname.replace('/', ''));
+
+  const { getByName, getBy, getByCategory } = useResultAPIs(pathname.replace('/', ''));
 
   useEffect(() => {
     (async () => {
       const result = await getByName('');
-      setResultSearchBar(result.slice(0, +('12')));
+      setResultSearchBar(result);
     })();
   }, [getByName]);
 
@@ -25,19 +30,32 @@ function Recipes() {
     } else {
       (async () => {
         const result = await getBy(searchBar.input, searchBar.radio);
-        setResultSearchBar(result?.slice(0, +('12')));
+        setResultSearchBar(result);
+        if (result.length === 1) {
+          history.push(`${pathname}/${result[0].idrecipe}`);
+        }
       })();
     }
-  }, [getBy, searchBar]);
+  }, [getBy, history, pathname, searchBar]);
 
-  if (resultSearchBar.length === 1) {
-    history.push(`${pathname}/${resultSearchBar[0].idrecipe}`);
-  }
+  useEffect(() => {
+    if (!mount.current) {
+      mount.current = true;
+    } else {
+      (async () => {
+        const result = filterCategory
+          ? await getByCategory(filterCategory)
+          : await getByName('');
+        setResultSearchBar(result);
+      })();
+    }
+  }, [filterCategory, getByCategory, mount]);
   return (
     <>
-      {resultSearchBar.length > 0 && <Category pathname={ pathname.replace('/', '') } />}
+      {resultSearchBar.length > 0
+      && <Category pathname={ pathname.replace('/', '') } />}
       <div className="container-cards">
-        {resultSearchBar.map((recipie, index) => (
+        {resultSearchBar.slice(0, +('12')).map((recipie, index) => (
           <Card
             testId={ `${index}-recipe-card` }
             { ...recipie }
