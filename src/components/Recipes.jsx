@@ -39,6 +39,7 @@ function Recipes() {
       <div className="container-cards">
         {resultSearchBar.map((recipie, index) => (
           <Card
+            testId={ `${index}-recipe-card` }
             { ...recipie }
             key={ recipie.idrecipe }
             index={ index }

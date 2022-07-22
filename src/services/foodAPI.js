@@ -85,6 +85,11 @@ export async function getAllCategoriesAreaIngredients() {
     ingredientsList,
   };
 }
+
+/**
+ * It fetches the list of categories from the API and returns it
+ * @returns An array of objects.
+ */
 export async function getAllCategories() {
   const urlCategories = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
   const categoriesList = await fetch(urlCategories)
