@@ -12,6 +12,7 @@ export default function Details() {
   const [recipieDetails, setRecipieDetails] = useState({});
   const [ingredients, setIngredients] = useState([]);
   const history = useHistory();
+  console.log(history);
   const { location: { pathname } } = history;
   const { getById } = useResultAPIs(pathname.split('/')[1]);
 
