@@ -26,7 +26,6 @@ export default function Details() {
   const [suggestionsRecipes, setSuggestionsRecipes] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const history = useHistory();
-  console.log(history);
   const { location: { pathname } } = history;
   const pathRecomendation = pathname.split('/')[1] === 'foods' ? 'drinks' : 'foods';
   const { getById } = useResultAPIs(pathname.split('/')[1]);
