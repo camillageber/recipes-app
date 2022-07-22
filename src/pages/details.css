@@ -52,3 +52,28 @@
   justify-content: flex-start;
   padding: 10px;
 }
+
+.recomendation-cards {
+  display: block;
+  height: fit-content;
+  overflow-x: scroll;
+  padding: 10px;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.item {
+  display: inline-block;
+  height: fit-content;
+  margin: 0 10px;
+  position: relative;
+  width: fit-content;
+}
+
+.item img {
+  height: 9.5rem;
+}
+
+.item p {
+  font-size: 1rem;
+}

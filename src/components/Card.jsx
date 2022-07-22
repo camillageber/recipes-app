@@ -5,16 +5,22 @@ import { useHistory } from 'react-router-dom';
 
 const INDEX_DEFAULT = -1;
 
-export default function Card({ recipethumb, recipe, idrecipe, index = INDEX_DEFAULT }) {
+export default function Card({
+  recipethumb, recipe, idrecipe, index = INDEX_DEFAULT, testId, alcoholic }) {
   const history = useHistory();
-  const { location: { pathname } } = history;
+
+  const handleClick = () => {
+    const path = alcoholic ? 'drinks' : 'foods';
+    console.log(path);
+    history.push(`/${path}/${idrecipe}`);
+  };
 
   return (
     <button
       type="button"
       className="card"
-      onClick={ () => history.push(`/${pathname.replace('/', '')}/${idrecipe}`) }
-      data-testid={ index === INDEX_DEFAULT ? '' : `${index}-recipe-card` }
+      onClick={ handleClick }
+      data-testid={ testId }
     >
       <img
         src={ recipethumb }
@@ -37,8 +43,12 @@ Card.propTypes = {
   recipethumb: PropTypes.string.isRequired,
   idrecipe: PropTypes.string.isRequired,
   index: PropTypes.number,
+  testId: PropTypes.string,
+  alcoholic: PropTypes.string,
 };
 
 Card.defaultProps = {
   index: -1,
+  testId: '',
+  alcoholic: null,
 };

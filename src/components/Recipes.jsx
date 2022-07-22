@@ -49,7 +49,7 @@ function Recipes() {
         setResultSearchBar(result);
       })();
     }
-  }, [filterCategory, getByCategory, mount]);
+  }, [filterCategory, getByCategory, getByName, mount]);
   return (
     <>
       {resultSearchBar.length > 0
@@ -57,6 +57,7 @@ function Recipes() {
       <div className="container-cards">
         {resultSearchBar.slice(0, +('12')).map((recipie, index) => (
           <Card
+            testId={ `${index}-recipe-card` }
             { ...recipie }
             key={ recipie.idrecipe }
             index={ index }
