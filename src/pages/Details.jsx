@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import Svg from '../components/Svg';
-import shareIcon from '../images/shareIcon.svg';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import ButtonFav from '../components/ButtonFav';
+import ButtonShare from '../components/ButtonShare';
 import useResultAPIs from '../services/combinerAPIs';
-// import { getAllMealDetailsById } from '../services/foodAPI';
-
 import './details.css';
 
 export default function Details() {
@@ -40,7 +37,7 @@ export default function Details() {
     })();
   }, [getById, pathname]);
 
-  if (!recipieDetails) return;
+  if (Object.keys(recipieDetails).length === 0) return '';
 
   return (
     <>
@@ -56,8 +53,8 @@ export default function Details() {
             <p className="category-card">{ recipieDetails.category }</p>
           </div>
           <div className="icons-card">
-            <Svg src={ shareIcon } />
-            <Svg src={ whiteHeartIcon } />
+            <ButtonShare />
+            <ButtonFav { ...recipieDetails } />
           </div>
         </div>
 
