@@ -1,20 +1,19 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import './card.css';
 import { useHistory } from 'react-router-dom';
-import foodContext from '../context/FoodContext';
 
 const INDEX_DEFAULT = -1;
 
 export default function Card({ recipethumb, recipe, idrecipe, index = INDEX_DEFAULT }) {
-  const { typeResult } = useContext(foodContext);
   const history = useHistory();
+  const { location: { pathname } } = history;
 
   return (
     <button
       type="button"
       className="card"
-      onClick={ () => history.push(`/${typeResult}/${idrecipe}`) }
+      onClick={ () => history.push(`/${pathname.replace('/', '')}/${idrecipe}`) }
       data-testid={ index === INDEX_DEFAULT ? '' : `${index}-recipe-card` }
     >
       <img
