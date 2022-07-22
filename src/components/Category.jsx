@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 
-// import { getAllCategoriesAreaIngredients } from '../services/foodAPI';
-// import { getAllCategoriesAlcoholicGlassesIngredients } from '../services/drinkAPI';
+import foodContext from '../context/FoodContext';
 import useResultAPIs from '../services/combinerAPIs';
 
 export default function Category({ pathname }) {
+  const { toggleFilterCategory } = useContext(foodContext);
   const [result, setResult] = useState([]);
 
   const { getAllCategories } = useResultAPIs(pathname);
@@ -24,12 +24,20 @@ export default function Category({ pathname }) {
 
   return (
     <div>
+      <button
+        type="button"
+        data-testid="All-category-filter"
+        onClick={ () => toggleFilterCategory('') }
+      >
+        All
+      </button>
       { filtro
         .map((element, inx) => (
           <button
             type="button"
             data-testid={ `${element.strCategory}-category-filter` }
             key={ inx }
+            onClick={ () => toggleFilterCategory(element.strCategory) }
           >
             { element.strCategory }
           </button>)) }
