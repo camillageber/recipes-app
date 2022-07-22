@@ -31,7 +31,7 @@ export async function searchMealByName(mealName) {
 export async function searchFirstLetter(firstLetter) {
   const url = `https://www.themealdb.com/api/json/v1/1/search.php?f=${firstLetter}`;
   console.log(url);
-  const result = await fetch(url)
+  const result = fetch(url)
     .then((response) => response.json())
     .then((response) => response.meals)
     .then((response) => (!response ? []

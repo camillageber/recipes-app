@@ -5,13 +5,24 @@ import foodContext from './FoodContext';
 
 function Provider({ children }) {
   const [searchBar, setSearchBar] = useState({ input: '', radio: '' });
+  const [filterCategory, setFilterCategory] = useState('');
 
-  function handleSearchBar({ inputValue, radioValue }) {
+  const handleSearchBar = ({ inputValue, radioValue }) => {
     setSearchBar({ input: inputValue, radio: radioValue });
-  }
+  };
+
+  const toggleFilterCategory = (category) => {
+    if (filterCategory === category) {
+      setFilterCategory('');
+    } else {
+      setFilterCategory(category);
+    }
+  };
 
   const state = {
     handleSearchBar,
+    toggleFilterCategory,
+    filterCategory,
     searchBar,
   };
 

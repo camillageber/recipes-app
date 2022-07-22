@@ -26,7 +26,8 @@ export default function useResultAPIs(typeResult) {
       getByName: foodAPI.searchMealByName,
       getAllCategories: foodAPI.getAllCategories,
     };
-  } if (typeResult === 'drinks') {
+  }
+  if (typeResult === 'drinks') {
     return {
       getBy: drinkAPI.getDrinkBy,
       getByAlcoholic: drinkAPI.getByAlcoholic,
