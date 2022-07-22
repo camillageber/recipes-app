@@ -22,7 +22,7 @@ export default function Profile() {
   return (
     <>
       <Header pageTitle="Profile" />
-      <h1>Profile</h1>
+      <h1>Profile </h1>
       <h3 data-testid="profile-email">{usuario.email}</h3>
       <button
         type="button"
