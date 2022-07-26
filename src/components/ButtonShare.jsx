@@ -8,7 +8,7 @@ const INDEX_DEFAULT = -1;
 export default function ButtonShare({ index = INDEX_DEFAULT, type, id, horizontal }) {
   const [copied, setCopied] = useState(false);
 
-  const type2 = ['foods', 'foods'].includes(type) ? 'foods' : 'drinks';
+  const type2 = ['foods', 'food'].includes(type) ? 'foods' : 'drinks';
 
   const oneSec = 1000;
   const url = `${window.document.location.origin}/${type2}/${id}`;

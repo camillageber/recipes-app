@@ -10,10 +10,8 @@ import {
 } from '../services/LocalStorege';
 import foodContext from '../context/FoodContext';
 
-const INDEX_DEFAULT = -1;
-
 export default function ButtonFav(props) {
-  const { id, index = INDEX_DEFAULT, horizontal } = props;
+  const { id, index, horizontal } = props;
 
   const { checkLocalStorege } = useContext(foodContext);
 

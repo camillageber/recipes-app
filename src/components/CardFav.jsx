@@ -7,40 +7,38 @@ import ButtonFav from './ButtonFav';
 
 import './cardFav.css';
 
-const INDEX_DEFAULT = -1;
-
-function CardFav(props) {
-  const { id, name, image, category, nationality, alcoholicOrNot,
-    index = INDEX_DEFAULT, testid = '', type } = props;
-
-  const type2 = ['foods', 'foods'].includes(type) ? 'foods' : 'drinks';
+function CardFav({ data, index, testid }) {
+  const {
+    id, name, image,
+    category, nationality,
+    alcoholicOrNot, type } = data;
+  const type2 = ['food', 'foods'].includes(type) ? 'foods' : 'drinks';
 
   return (
-    <div className="cardFav">
+    <div className="cardFav" data-testid={ testid }>
       <Link
         to={ `/${type2}/${id}` }
-        data-testid={ testid }
+
       >
         <img
           src={ image }
           alt="imagem da receita"
-          data-testid={ index === INDEX_DEFAULT ? '' : `${index}-horizontal-image` }
+          data-testid={ `${index}-horizontal-image` }
         />
       </Link>
       <div className="wrapper">
         <div>
 
           <h3
-            data-testid={ index === INDEX_DEFAULT ? '' : `${index}-horizontal-top-text` }
+            data-testid={ `${index}-horizontal-top-text` }
           >
             {alcoholicOrNot || `${nationality} - ${category}`}
 
           </h3>
           <Link
-            to={ `/${type}/${id}` }
-            data-testid={ testid }
+            to={ `/${type2}/${id}` }
           >
-            <h2 data-testid={ index === INDEX_DEFAULT ? '' : `${index}-horizontal-name` }>
+            <h2 data-testid={ `${index}-horizontal-name` }>
               {name}
             </h2>
           </Link>
@@ -54,7 +52,8 @@ function CardFav(props) {
           />
           <ButtonFav
             horizontal
-            { ...props }
+            index={ index }
+            { ...data }
           />
         </div>
       </div>
@@ -63,19 +62,12 @@ function CardFav(props) {
 }
 
 CardFav.propTypes = {
-  alcoholicOrNot: PropTypes.string.isRequired,
-  category: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
-  index: PropTypes.number,
-  name: PropTypes.string.isRequired,
-  nationality: PropTypes.string.isRequired,
+  data: PropTypes.arrayOf(PropTypes.string).isRequired,
   testid: PropTypes.string,
-  type: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
 };
 
 CardFav.defaultProps = {
-  index: INDEX_DEFAULT,
   testid: '',
 };
 
