@@ -76,12 +76,13 @@ export default function Details() {
               id={ recipieDetails.idrecipe }
             />
             <ButtonFav
+              alcoholicOrNot={ recipieDetails.alcoholic || '' }
+              category={ recipieDetails.category }
               id={ recipieDetails.idrecipe }
+              image={ recipieDetails.recipethumb }
               name={ recipieDetails.recipe }
               nationality={ recipieDetails.area || '' }
-              alcoholicOrNot={ recipieDetails.alcoholic || '' }
-              image={ recipieDetails.recipethumb }
-              category={ recipieDetails.category }
+              type={ recipieDetails.alcoholic ? 'drinks' : 'foods' }
             />
           </div>
         </div>

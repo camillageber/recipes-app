@@ -11,17 +11,22 @@ const INDEX_DEFAULT = -1;
 
 function CardFav(props) {
   const { id, name, image, category, nationality, alcoholicOrNot,
-    index = INDEX_DEFAULT, testId = '', type } = props;
+    index = INDEX_DEFAULT, testid = '', type } = props;
+
+  const type2 = ['foods', 'foods'].includes(type) ? 'foods' : 'drinks';
 
   return (
     <div className="cardFav">
-
-      <img
-        src={ image }
-        alt="imagem da receita"
-        data-testid={ index === INDEX_DEFAULT ? '' : `${index}-horizontal-image` }
-      />
-
+      <Link
+        to={ `/${type2}/${id}` }
+        data-testid={ testid }
+      >
+        <img
+          src={ image }
+          alt="imagem da receita"
+          data-testid={ index === INDEX_DEFAULT ? '' : `${index}-horizontal-image` }
+        />
+      </Link>
       <div className="wrapper">
         <div>
 
@@ -32,8 +37,8 @@ function CardFav(props) {
 
           </h3>
           <Link
-            to={ `/${alcoholicOrNot ? 'drinks' : 'foods'}/${id}` }
-            data-testid={ testId }
+            to={ `/${type}/${id}` }
+            data-testid={ testid }
           >
             <h2 data-testid={ index === INDEX_DEFAULT ? '' : `${index}-horizontal-name` }>
               {name}
@@ -42,11 +47,13 @@ function CardFav(props) {
         </div>
         <div className="buttons">
           <ButtonShare
+            horizontal
             id={ id }
             type={ type }
             index={ index }
           />
           <ButtonFav
+            horizontal
             { ...props }
           />
         </div>
@@ -63,13 +70,13 @@ CardFav.propTypes = {
   index: PropTypes.number,
   name: PropTypes.string.isRequired,
   nationality: PropTypes.string.isRequired,
-  testId: PropTypes.string,
+  testid: PropTypes.string,
   type: PropTypes.string.isRequired,
 };
 
 CardFav.defaultProps = {
   index: INDEX_DEFAULT,
-  testId: '',
+  testid: '',
 };
 
 export default CardFav;

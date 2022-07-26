@@ -13,7 +13,7 @@ import foodContext from '../context/FoodContext';
 const INDEX_DEFAULT = -1;
 
 export default function ButtonFav(props) {
-  const { id, index = INDEX_DEFAULT, alcoholicOrNot } = props;
+  const { id, index = INDEX_DEFAULT, horizontal } = props;
 
   const { checkLocalStorege } = useContext(foodContext);
 
@@ -32,7 +32,7 @@ export default function ButtonFav(props) {
   const handleClick = () => {
     if (!heart) {
       addToList('favoriteRecipes',
-        { type: alcoholicOrNot ? 'drinks' : 'food', ...props });
+        { ...props });
     } else {
       removeToList('favoriteRecipes', id);
     }
@@ -47,8 +47,7 @@ export default function ButtonFav(props) {
       <img
         src={ heart ? blackHeartIcon
           : whiteHeartIcon }
-        testId="favorite-btn"
-        data-testid={ index >= 0 ? `${index}-horizontal-favorite-btn` : '' }
+        data-testid={ horizontal ? `${index}-horizontal-favorite-btn` : 'favorite-btn' }
         alt=""
       />
     </button>
@@ -56,11 +55,12 @@ export default function ButtonFav(props) {
 }
 
 ButtonFav.propTypes = {
-  alcoholicOrNot: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   index: PropTypes.number,
+  horizontal: PropTypes.bool,
 };
 
 ButtonFav.defaultProps = {
   index: -1,
+  horizontal: false,
 };
