@@ -25,11 +25,11 @@ export default function Card({
       <img
         src={ recipethumb }
         alt="imagem da receita"
-        data-testid={ index === +('-1') ? '' : `${index}-card-img` }
+        data-testid={ index === INDEX_DEFAULT ? '' : `${index}-card-img` }
       />
       <div>
         <h2
-          data-testid={ index === +('-1') ? '' : `${index}-card-name` }
+          data-testid={ index === INDEX_DEFAULT ? '' : `${index}-card-name` }
         >
           {recipe}
         </h2>
@@ -48,7 +48,7 @@ Card.propTypes = {
 };
 
 Card.defaultProps = {
-  index: -1,
+  index: INDEX_DEFAULT,
   testId: '',
   alcoholic: null,
 };

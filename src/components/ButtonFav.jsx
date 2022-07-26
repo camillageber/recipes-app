@@ -1,58 +1,66 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
-import Svg from './Svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+import {
+  addToList,
+  getLocalStore,
+  removeToList,
+  setLocalStore,
+} from '../services/LocalStorege';
+import foodContext from '../context/FoodContext';
 
-export default function ButtonFav({ idrecipe,
-  alcoholic, area, category, recipe, recipethumb }) {
-  const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-  if (!favoriteRecipes) {
-    localStorage.setItem('favoriteRecipes', JSON.stringify([]));
-  }
-  const isFavorite = favoriteRecipes?.some((recipes) => recipes.id === idrecipe);
-  const [heart, setHeart] = useState(isFavorite);
+const INDEX_DEFAULT = -1;
+
+export default function ButtonFav(props) {
+  const { id, index = INDEX_DEFAULT, alcoholicOrNot } = props;
+
+  const { checkLocalStorege } = useContext(foodContext);
+
+  const [heart, setHeart] = useState(false);
+
+  useEffect(() => {
+    const favoriteRecipes = getLocalStore('favoriteRecipes');
+    if (!favoriteRecipes) {
+      setLocalStore('favoriteRecipes', []);
+      return;
+    }
+    const isFavorite = favoriteRecipes.some((recipes) => recipes.id === id);
+    setHeart(isFavorite);
+  }, [id]);
+
   const handleClick = () => {
     if (!heart) {
-      localStorage.setItem('favoriteRecipes',
-        JSON.stringify([...favoriteRecipes,
-          { id: idrecipe,
-            type: alcoholic ? 'drink' : 'food',
-            nationality: area === null ? '' : area,
-            category,
-            alcoholicOrNot: alcoholic === null ? '' : alcoholic,
-            name: recipe,
-            image: recipethumb }]));
+      addToList('favoriteRecipes',
+        { type: alcoholicOrNot ? 'drinks' : 'food', ...props });
     } else {
-      const newArray = favoriteRecipes.filter((recipes) => recipes.id !== idrecipe);
-      localStorage.setItem('favoriteRecipes', JSON.stringify(newArray));
+      removeToList('favoriteRecipes', id);
     }
     setHeart(!heart);
+    checkLocalStorege();
   };
   return (
     <button
       type="button"
       onClick={ () => handleClick() }
     >
-      <Svg
+      <img
         src={ heart ? blackHeartIcon
           : whiteHeartIcon }
         testId="favorite-btn"
+        data-testid={ index >= 0 ? `${index}-horizontal-favorite-btn` : '' }
+        alt=""
       />
     </button>
   );
 }
 
 ButtonFav.propTypes = {
-  idrecipe: PropTypes.string.isRequired,
-  alcoholic: PropTypes.string,
-  area: PropTypes.string,
-  recipe: PropTypes.string.isRequired,
-  recipethumb: PropTypes.string.isRequired,
-  category: PropTypes.string.isRequired,
+  alcoholicOrNot: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  index: PropTypes.number,
 };
 
 ButtonFav.defaultProps = {
-  area: null,
-  alcoholic: null,
+  index: -1,
 };
