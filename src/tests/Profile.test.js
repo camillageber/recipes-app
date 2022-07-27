@@ -23,7 +23,7 @@ describe('Testa a tela Profile', () => {
   test('testa botão Done', () => {
     // acessar os elementos da tela
     renderWithRouter(<Profile />)
-    const buttonDone = screen.getAllByTestId('profile-done-btn');
+    const buttonDone = screen.getByTestId('profile-done-btn');
     userEvent.click(buttonDone);
   });
 });
