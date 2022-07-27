@@ -18,7 +18,6 @@ describe('Testa a tela Profile', () => {
 
   test('Verifica se há o botão "Done Recipes" na tela e redireciona para a página correta', async () => {
     const {history} = renderWithRouter(<App />, '/profile');
-
     const btnDoneRecipes = await screen.findByRole('button', { name: /done recipes/i });
     expect(btnDoneRecipes).toBeInTheDocument();
     userEvent.click(btnDoneRecipes);
@@ -29,7 +28,6 @@ describe('Testa a tela Profile', () => {
 
   test('Testa botão Done Recipes', async () => {
    renderWithRouter(<App />, '/profile');
-
     const buttonDone = await screen.findByTestId('profile-done-btn');
     userEvent.click(buttonDone);
 
@@ -39,7 +37,6 @@ describe('Testa a tela Profile', () => {
 
   test('Testa botão Favorite Recipes', async () => {
   renderWithRouter(<App />, '/profile');
-
     const buttonDone = await screen.findByTestId('profile-favorite-btn');
     userEvent.click(buttonDone);
 
@@ -49,7 +46,6 @@ describe('Testa a tela Profile', () => {
 
   test('Testa o botão "Logout"', async () => {
   renderWithRouter(<App />, '/profile');
-       
     const buttonLogout = await screen.findByTestId("profile-logout-btn");
     userEvent.click(buttonLogout);
     const cleanedLocalStorage = localStorage.getItem('user');
@@ -59,3 +55,4 @@ describe('Testa a tela Profile', () => {
 })
 
 });
+
