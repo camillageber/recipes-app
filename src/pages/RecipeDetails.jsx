@@ -21,7 +21,7 @@ const getIngredients = (recipe) => {
   return newIngredients;
 };
 
-export default function Details() {
+export default function RecipeDetails() {
   const [recipieDetails, setRecipieDetails] = useState({});
   const [suggestionsRecipes, setSuggestionsRecipes] = useState([]);
   const [ingredients, setIngredients] = useState([]);
