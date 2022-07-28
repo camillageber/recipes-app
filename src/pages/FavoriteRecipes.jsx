@@ -12,9 +12,6 @@ function FavoriteRecipes() {
   const [recipes, setRecipes] = useState([]);
   const [typeFilter, setTypeFilter] = useState('');
 
-  console.log(typeFilter, 'typefilter');
-  console.log(recipes, 'receitas');
-
   const handleClick = (type) => {
     setTypeFilter(type);
   };
@@ -55,10 +52,7 @@ function FavoriteRecipes() {
       </div>
       <div className="recipes">
         {recipes
-          .filter((recipe) => {
-            console.log(recipe.type.includes(typeFilter), recipe.type);
-            return recipe.type.includes(typeFilter);
-          })
+          .filter((recipe) => recipe.type.includes(typeFilter))
           .map((recipe, index) => (
             <CardFav
               index={ index }
