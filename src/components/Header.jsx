@@ -41,5 +41,9 @@ export default function Header({ pageTitle, color }) {
 
 Header.propTypes = {
   pageTitle: PropTypes.string.isRequired,
-  color: PropTypes.string.isRequired,
+  color: PropTypes.string,
+};
+
+Header.defaultProps = {
+  color: '',
 };

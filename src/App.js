@@ -27,7 +27,7 @@ function App() {
         <Route path="/drinks/:id" component={ Details } />
         <Route path="/profile" component={ Profile } />
         <Route path="/done-recipes" component={ DoneRecipes } />
-        <Route path="/favorite-recipes" component={ FavoriteRecipes } />
+        <Route exect path="/favorite-recipes" component={ FavoriteRecipes } />
         <Route path="/test" component={ Card } />
       </Switch>
     </FoodProvider>
