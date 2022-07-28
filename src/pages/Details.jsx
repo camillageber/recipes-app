@@ -82,7 +82,7 @@ export default function Details() {
               image={ recipieDetails.recipethumb }
               name={ recipieDetails.recipe }
               nationality={ recipieDetails.area || '' }
-              type={ recipieDetails.alcoholic ? 'drinks' : 'foods' }
+              type={ recipieDetails.alcoholic ? 'drink' : 'food' }
             />
           </div>
         </div>

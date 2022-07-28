@@ -12,7 +12,7 @@ function CardFav({ data, index, testid }) {
     id, name, image,
     category, nationality,
     alcoholicOrNot, type } = data;
-  const type2 = ['food', 'foods'].includes(type) ? 'foods' : 'drinks';
+  const type2 = 'foods'.includes(type) ? 'foods' : 'drinks';
 
   return (
     <div className="cardFav" data-testid={ testid }>

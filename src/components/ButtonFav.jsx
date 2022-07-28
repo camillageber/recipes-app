@@ -11,7 +11,7 @@ import {
 import foodContext from '../context/FoodContext';
 
 export default function ButtonFav(props) {
-  const { id, index, horizontal } = props;
+  const { id, index, horizontal, ...rest } = props;
 
   const { checkLocalStorege } = useContext(foodContext);
 
@@ -30,7 +30,7 @@ export default function ButtonFav(props) {
   const handleClick = () => {
     if (!heart) {
       addToList('favoriteRecipes',
-        { ...props });
+        { ...rest, id });
     } else {
       removeToList('favoriteRecipes', id);
     }
