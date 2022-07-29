@@ -101,6 +101,7 @@ export default function RecipeInProgress() {
                   key={ index }
                   data-testid={ `${index}-ingredient-step` }
                 >
+                  <input type="checkbox" />
                   { `${ingredient} - ${ingredients[0][index]}` }
                 </li>))}
             </ul>
