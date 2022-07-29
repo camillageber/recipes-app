@@ -28,7 +28,7 @@ export default function Details() {
   const [ingredients, setIngredients] = useState([]);
   const history = useHistory();
   const { location: { pathname } } = history;
-  const pathRecomendation = pathname.split('/')[1] === 'foods' ? 'drinks' : 'foods';
+  const pathRecomendation = pathname.includes('foods') ? 'drinks' : 'foods';
   const { getById } = useResultAPIs(pathname.split('/')[1]);
   const { getByName } = useResultAPIs(pathRecomendation);
 
@@ -144,7 +144,10 @@ export default function Details() {
             ))
           ) }
         </div>
-        <ButtonStart />
+        <ButtonStart
+          id={ recipieDetails.idrecipe }
+          type={ recipieDetails.alcoholic ? 'cocktails' : 'meals' }
+        />
       </div>
     </>
   );

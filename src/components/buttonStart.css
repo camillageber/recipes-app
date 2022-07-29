@@ -1,4 +1,10 @@
 .btn-start {
-  background-color: transparent;
+  background-color: rgb(17, 17, 17);
   border: none;
+  border-radius: 6px;
+  bottom: 0;
+  color: rgb(241, 241, 241);
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  position: fixed;
 }
