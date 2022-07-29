@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
-// import { useHistory } from 'react-router-dom';
+import React, { useEffect, useRef, useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 
+import foodContext from '../context/FoodContext';
 import { getLocalStore, setLocalStore } from '../services/LocalStorege';
 
 import './buttonStart.css';
@@ -10,15 +11,21 @@ const START_RECIPES = 'Start Recipe';
 
 function ButtonStart(props) {
   const { id, type } = props;
+
+  const { upadateLocalStore, checkLocalStorege } = useContext(foodContext);
+
   const [buttonValue, setButtonValue] = useState(START_RECIPES);
   const [
     inProgressRecipes,
+    setInProgressRecipes,
+  ] = useState({});
 
-  ] = useState(getLocalStore('inProgressRecipes') || {});
+  const mount = useRef(null);
 
-  // const { push, location: { pathname } } = useHistory();
+  const { push, location: { pathname } } = useHistory();
 
   const handleClick = () => {
+    checkLocalStorege();
     if (buttonValue === START_RECIPES) {
       const newInProgressRecipes = {
         ...inProgressRecipes,
@@ -29,17 +36,27 @@ function ButtonStart(props) {
       };
       setLocalStore('inProgressRecipes', newInProgressRecipes);
     }
-    // push(`${pathname}/in-progress`);
+    push(`${pathname}/in-progress`);
   };
 
   useEffect(() => {
-    const isInProgress = Object.keys(inProgressRecipes[type]).includes(id);
-    if (isInProgress) {
-      setButtonValue('Continue Recipe');
-    } else {
-      setButtonValue(START_RECIPES);
+    if (!mount.current) { // ComponenteDidMount
+      const getLocal = getLocalStore('inProgressRecipes') || {};
+
+      setInProgressRecipes(getLocal);
+
+      mount.current = true;
+    } else { // ComponenteDidUpdate
+      if (!inProgressRecipes[type]) return;
+      const isInProgress = Object.keys(inProgressRecipes[type]).includes(id);
+
+      if (isInProgress) {
+        setButtonValue('Continue Recipe');
+      } else {
+        setButtonValue(START_RECIPES);
+      }
     }
-  }, [id, inProgressRecipes, type]);
+  }, [id, inProgressRecipes, type, upadateLocalStore]);
 
   return (
 

@@ -26,9 +26,11 @@ export default function Details() {
   const [recipieDetails, setRecipieDetails] = useState({});
   const [suggestionsRecipes, setSuggestionsRecipes] = useState([]);
   const [ingredients, setIngredients] = useState([]);
+
   const history = useHistory();
   const { location: { pathname } } = history;
   const pathRecomendation = pathname.includes('foods') ? 'drinks' : 'foods';
+
   const { getById } = useResultAPIs(pathname.split('/')[1]);
   const { getByName } = useResultAPIs(pathRecomendation);
 
