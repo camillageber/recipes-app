@@ -5,6 +5,7 @@ import useResultAPIs from '../services/combinerAPIs';
 import ButtonFav from '../components/ButtonFav';
 import ButtonShare from '../components/ButtonShare';
 import './details.css';
+import ButtonStart from '../components/ButtonStart';
 
 const getIngredients = (recipe) => {
   const newIngredients = Object.entries(recipe)
@@ -52,7 +53,7 @@ export default function Details() {
           className="image-card"
           data-testid="recipe-photo"
           src={ recipieDetails.recipethumb }
-          alt="Big Mac"
+          alt={ `receita ${recipieDetails.recipe}` }
         />
         <div className="card-inner">
           <div className="title-subtitle-card">
@@ -143,6 +144,7 @@ export default function Details() {
             ))
           ) }
         </div>
+        <ButtonStart />
       </div>
     </>
   );
