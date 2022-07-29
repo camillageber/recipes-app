@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import useResultAPIs from '../services/combinerAPIs';
+import ResultAPIs from '../services/combinerAPIs';
 
 import ButtonFav from '../components/ButtonFav';
 import ButtonShare from '../components/ButtonShare';
 import './details.css';
 import ButtonFinish from '../components/ButtonFinish';
+import { getLocalStore, setLocalStore } from '../services/LocalStorege';
 
 const getIngredients = (recipe) => {
   const newIngredients = Object.entries(recipe)
@@ -24,27 +25,53 @@ const getIngredients = (recipe) => {
 
 export default function RecipeInProgress() {
   const [recipieDetails, setRecipieDetails] = useState({});
-  const [suggestionsRecipes, setSuggestionsRecipes] = useState([]);
   const [ingredients, setIngredients] = useState([]);
+  const [id, setId] = useState('');
+  const [checkboxs, setCheckboxs] = useState({});
 
-  const history = useHistory();
-  const { location: { pathname } } = history;
-  const pathRecomendation = pathname.includes('foods') ? 'drinks' : 'foods';
+  const mount = useRef(null);
+  const { location: { pathname } } = useHistory();
 
-  const { getById } = useResultAPIs(pathname.split('/')[1]);
-  const { getByName } = useResultAPIs(pathRecomendation);
+  const handleChange = ({ target }) => {
+    const type = pathname.includes('foods') ? 'meals' : 'cocktails';
+    const inProgressRecipes = getLocalStore('inProgressRecipes');
+    if (target.checked) {
+      const newInProgress = {
+        ...inProgressRecipes,
+        [type]: {
+          ...inProgressRecipes[type],
+          [id]: [...inProgressRecipes[type][id], target.name],
+        },
+      };
+      setLocalStore('inProgressRecipes', newInProgress);
+    } else {
+      const newInProgress = {
+        ...inProgressRecipes,
+        [type]: {
+          ...inProgressRecipes[type],
+          [id]: inProgressRecipes[type][id]
+            .filter((ingredient) => ingredient !== target.name),
+        },
+      };
+      setLocalStore('inProgressRecipes', newInProgress);
+    }
+
+    setCheckboxs({ ...checkboxs, [target.name]: !checkboxs[target.name] });
+  };
 
   useEffect(() => {
-    const id = pathname.split('/')[2];
-    (async () => {
-      const result = await getById(id);
-      setRecipieDetails(await result);
-      setIngredients(getIngredients(await result));
-      const resultRecomendation = await getByName('');
-      setSuggestionsRecipes(resultRecomendation
-        .filter((recipe, index) => index < +('6')));
-    })();
-  }, [getById, getByName, pathname]);
+    if (!mount.current) {
+      setId(pathname.split('/')[2]);
+      mount.current = true;
+    } else {
+      (async () => {
+        const { getById } = ResultAPIs(pathname.split('/')[1]);
+        const result = await getById(id);
+        setRecipieDetails(await result);
+        setIngredients(getIngredients(await result));
+      })();
+    }
+  }, [id, pathname]);
 
   if (Object.keys(recipieDetails).length === 0) return '';
 
@@ -101,7 +128,12 @@ export default function RecipeInProgress() {
                   key={ index }
                   data-testid={ `${index}-ingredient-step` }
                 >
-                  <input type="checkbox" />
+                  <input
+                    type="checkbox"
+                    name={ ingredient }
+                    value={ checkboxs[ingredient] }
+                    onChange={ handleChange }
+                  />
                   { `${ingredient} - ${ingredients[0][index]}` }
                 </li>))}
             </ul>
@@ -131,22 +163,6 @@ export default function RecipeInProgress() {
             />
           </div>
         )}
-        <div className="recomendation-cards">
-          {suggestionsRecipes.length > 0 && (
-            suggestionsRecipes.map((recipe, index) => (
-              <section
-                className="item"
-                key={ recipe.idrecipe }
-                data-testid={ `${index}-recomendation-card` }
-              >
-                <img src={ recipe.recipethumb } alt="img" />
-                <p data-testid={ `${index}-recomendation-title` }>
-                  {recipe.recipe}
-                </p>
-              </section>
-            ))
-          ) }
-        </div>
         <ButtonFinish
           id={ recipieDetails.idrecipe }
           type={ recipieDetails.alcoholic ? 'cocktails' : 'meals' }
