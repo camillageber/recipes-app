@@ -71,8 +71,19 @@ export default function RecipeDetails() {
             </p>
           </div>
           <div className="icons-card">
-            <ButtonShare />
-            <ButtonFav { ...recipieDetails } />
+            <ButtonShare
+              type={ recipieDetails.alcoholic ? 'drinks' : 'foods' }
+              id={ recipieDetails.idrecipe }
+            />
+            <ButtonFav
+              alcoholicOrNot={ recipieDetails.alcoholic || '' }
+              category={ recipieDetails.category }
+              id={ recipieDetails.idrecipe }
+              image={ recipieDetails.recipethumb }
+              name={ recipieDetails.recipe }
+              nationality={ recipieDetails.area || '' }
+              type={ recipieDetails.alcoholic ? 'drink' : 'food' }
+            />
           </div>
         </div>
 

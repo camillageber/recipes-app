@@ -6,6 +6,11 @@ import foodContext from './FoodContext';
 function Provider({ children }) {
   const [searchBar, setSearchBar] = useState({ input: '', radio: '' });
   const [filterCategory, setFilterCategory] = useState('');
+  const [updateLocalStorege, setUpdateLocalStorege] = useState(false);
+
+  const checkLocalStorege = () => {
+    setUpdateLocalStorege(!updateLocalStorege);
+  };
 
   const handleSearchBar = ({ inputValue, radioValue }) => {
     setSearchBar({ input: inputValue, radio: radioValue });
@@ -22,6 +27,8 @@ function Provider({ children }) {
   const state = {
     handleSearchBar,
     toggleFilterCategory,
+    checkLocalStorege,
+    updateLocalStorege,
     filterCategory,
     searchBar,
   };
