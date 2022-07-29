@@ -4,7 +4,7 @@ import ResultAPIs from '../services/combinerAPIs';
 
 import ButtonFav from '../components/ButtonFav';
 import ButtonShare from '../components/ButtonShare';
-import './details.css';
+import './recipesInProgress.css';
 import ButtonFinish from '../components/ButtonFinish';
 import { getLocalStore, setLocalStore } from '../services/LocalStorege';
 
@@ -142,13 +142,19 @@ export default function RecipeInProgress() {
                   key={ index }
                   data-testid={ `${index}-ingredient-step` }
                 >
-                  <input
-                    type="checkbox"
-                    name={ ingredient }
-                    checked={ checkboxs[ingredient] }
-                    onChange={ handleChange }
-                  />
-                  { `${ingredient} - ${ingredients[0][index]}` }
+                  <label
+                    htmlFor={ ingredient }
+                    className={ checkboxs[ingredient] ? 'completed' : '' }
+                  >
+                    <input
+                      type="checkbox"
+                      name={ ingredient }
+                      id={ ingredient }
+                      checked={ checkboxs[ingredient] }
+                      onChange={ handleChange }
+                    />
+                    { `${ingredient} - ${ingredients[0][index]}` }
+                  </label>
                 </li>))}
             </ul>
           </div>
