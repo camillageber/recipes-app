@@ -7,7 +7,7 @@ import foodContext from '../context/FoodContext';
 import './buttonStart.css';
 
 function ButtonFinish(props) {
-  const { id, type } = props;
+  const { id, type, disabled } = props;
 
   const { upadateLocalStore, checkLocalStorege } = useContext(foodContext);
 
@@ -34,6 +34,7 @@ function ButtonFinish(props) {
       type="button"
       onClick={ handleClick }
       data-testid="finish-recipe-btn"
+      disabled={ disabled }
     >
       Finish Recipe
     </button>
@@ -43,6 +44,7 @@ function ButtonFinish(props) {
 ButtonFinish.propTypes = {
   id: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
+  disabled: PropTypes.bool.isRequired,
 };
 
 export default ButtonFinish;
