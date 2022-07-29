@@ -178,6 +178,7 @@ export default function RecipeInProgress() {
                         name={ ingredient }
                         id={ ingredient }
                         checked={ checkboxs[ingredient] }
+                        value={ checkboxs[ingredient] }
                         onChange={ handleChange }
                       />
                       { `${ingredient} - ${ingredients[0][index]}` }
