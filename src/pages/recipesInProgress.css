@@ -1,0 +1,83 @@
+.card-details {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  font-family: sans-serif;
+}
+
+.card-inner {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 10px;
+}
+
+.image-card {
+  height: 155px;
+  object-fit: cover;
+  object-position: 0 10%;
+  width: 100vw;
+}
+
+.icons-card {
+  display: flex;
+  gap: 11px;
+  height: 26px;
+  margin-right: 5px;
+}
+
+.title-card {
+  font-size: 30px;
+  font-weight: 400;
+}
+
+.category-card {
+  color: darkgrey;
+  font-size: 21px;
+}
+
+.content-wrapper {
+  background-color: white;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px;
+}
+
+.container-info {
+  background-color: #ececec;
+  border-radius: 4px;
+  display: flex;
+  justify-content: flex-start;
+  padding: 10px;
+}
+
+.recomendation-cards {
+  display: block;
+  height: fit-content;
+  overflow-x: scroll;
+  padding: 10px;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.item {
+  display: inline-block;
+  height: fit-content;
+  margin: 0 10px;
+  position: relative;
+  width: fit-content;
+}
+
+.item img {
+  height: 9.5rem;
+}
+
+.item p {
+  font-size: 1rem;
+}
+
+.completed {
+  text-decoration: line-through;
+}

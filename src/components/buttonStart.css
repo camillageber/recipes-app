@@ -1,0 +1,20 @@
+.btn-start {
+  background-color: rgb(17, 17, 17);
+  border: none;
+  border-radius: 6px;
+  bottom: 0;
+  color: rgb(241, 241, 241);
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  position: fixed;
+}
+
+.btn-start:hover {
+  background-color: rgb(31, 84, 38);
+}
+
+.btn-start:disabled {
+  background-color: rgb(241, 241, 241);
+  color: rgb(17, 17, 17);
+  cursor: no-drop;
+}
