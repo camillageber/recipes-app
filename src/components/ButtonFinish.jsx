@@ -1,31 +1,15 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useRef, useContext } from 'react';
-// import { useHistory } from 'react-router-dom';
-
-import foodContext from '../context/FoodContext';
+import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 import './buttonStart.css';
 
-function ButtonFinish(props) {
-  const { id, type, disabled } = props;
-
-  const { upadateLocalStore, checkLocalStorege } = useContext(foodContext);
-
-  const mount = useRef(null);
-
-  // const { push, location: { pathname } } = useHistory();
+function ButtonFinish({ disabled }) {
+  const { push } = useHistory();
 
   const handleClick = () => {
-    checkLocalStorege();
+    push('/done-recipes');
   };
-
-  useEffect(() => {
-    if (!mount.current) { // ComponenteDidMount
-
-    } else { // ComponenteDidUpdate
-
-    }
-  }, [id, type, upadateLocalStore]);
 
   return (
 
@@ -42,8 +26,6 @@ function ButtonFinish(props) {
 }
 
 ButtonFinish.propTypes = {
-  id: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
   disabled: PropTypes.bool.isRequired,
 };
 

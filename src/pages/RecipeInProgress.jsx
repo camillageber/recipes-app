@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import ResultAPIs from '../services/combinerAPIs';
 
@@ -7,6 +7,7 @@ import ButtonShare from '../components/ButtonShare';
 import './recipesInProgress.css';
 import ButtonFinish from '../components/ButtonFinish';
 import { getLocalStore, setLocalStore } from '../services/LocalStorege';
+import foodContext from '../context/FoodContext';
 
 const getIngredients = (recipe) => {
   const newIngredients = Object.entries(recipe)
@@ -24,12 +25,15 @@ const getIngredients = (recipe) => {
 };
 
 export default function RecipeInProgress() {
+  const { updateLocalStorege, checkLocalStorege } = useContext(foodContext);
+
   const [recipieDetails, setRecipieDetails] = useState({});
   const [ingredients, setIngredients] = useState([]);
   const [id, setId] = useState('');
   const [type, setType] = useState('');
   const [checkboxs, setCheckboxs] = useState({});
-  const [inProgressRecipes] = useState(getLocalStore('inProgressRecipes'));
+  const [inProgressRecipes, setInProgress] = useState(getLocalStore('inProgressRecipes'));
+  console.log(inProgressRecipes);
 
   const mount = useRef(null);
   const { location: { pathname } } = useHistory();
@@ -57,6 +61,7 @@ export default function RecipeInProgress() {
     }
 
     setCheckboxs((prev) => ({ ...prev, [target.name]: !checkboxs[target.name] }));
+    checkLocalStorege();
   };
 
   useEffect(() => {
@@ -64,24 +69,45 @@ export default function RecipeInProgress() {
       const checkType = pathname.includes('foods') ? 'meals' : 'cocktails';
       setType(checkType);
       setId(pathname.split('/')[2]);
+
       mount.current = true;
-    } else {
+    } else if (ingredients.length === 0) {
       (async () => {
         const { getById } = ResultAPIs(pathname.split('/')[1]);
         const result = await getById(id);
         setRecipieDetails(await result);
         setIngredients(getIngredients(await result));
       })();
-    }
-  }, [checkboxs, id, inProgressRecipes, pathname, type]);
 
+      if (!inProgressRecipes) {
+        setLocalStore('inProgressRecipes', {
+          [type]: { [id]: [] },
+        });
+        checkLocalStorege();
+      } else if (!Object.keys(inProgressRecipes[type]).includes(id)) {
+        console.log('aqui');
+        setLocalStore('inProgressRecipes', {
+          ...inProgressRecipes,
+          [type]: {
+            ...inProgressRecipes[type],
+            [id]: [] },
+        });
+        checkLocalStorege();
+      }
+    }
+  }, [ingredients, pathname, id, inProgressRecipes, type, checkLocalStorege]);
+
+  useEffect(() => {
+    setInProgress(getLocalStore('inProgressRecipes'));
+  }, [updateLocalStorege]);
+
+  // Inicia com os checkbox selecionados
   useEffect(() => {
     if (ingredients.length > 0 && Object.keys(checkboxs).length === 0) {
       ingredients[1].forEach((ingredient) => {
-        console.log(ingredient);
         setCheckboxs((prev) => ({
           ...prev,
-          [ingredient]: inProgressRecipes[type][id].includes(ingredient) || false,
+          [ingredient]: inProgressRecipes[type][id]?.includes(ingredient) || false,
         }));
       });
     }
@@ -138,24 +164,24 @@ export default function RecipeInProgress() {
           <div className="container-info">
             <ul>
               {ingredients.length > 0 && ingredients[1].map((ingredient, index) => (
-                <li
+                (<li
                   key={ index }
-                  data-testid={ `${index}-ingredient-step` }
                 >
                   <label
                     htmlFor={ ingredient }
-                    className={ checkboxs[ingredient] ? 'completed' : '' }
+                    className={ checkboxs[ingredient] }
+                    data-testid={ `${index}-ingredient-step` }
                   >
                     <input
                       type="checkbox"
                       name={ ingredient }
                       id={ ingredient }
-                      checked={ checkboxs[ingredient] }
+                      checked={ checkboxs[ingredient] || ' ' }
                       onChange={ handleChange }
                     />
                     { `${ingredient} - ${ingredients[0][index]}` }
                   </label>
-                </li>))}
+                </li>)))}
             </ul>
           </div>
         </div>
