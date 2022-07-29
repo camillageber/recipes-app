@@ -164,24 +164,26 @@ export default function RecipeInProgress() {
           <div className="container-info">
             <ul>
               {ingredients.length > 0 && ingredients[1].map((ingredient, index) => (
-                (<li
-                  key={ index }
-                >
-                  <label
-                    htmlFor={ ingredient }
-                    className={ checkboxs[ingredient] }
-                    data-testid={ `${index}-ingredient-step` }
+                (
+                  <li
+                    key={ index }
                   >
-                    <input
-                      type="checkbox"
-                      name={ ingredient }
-                      id={ ingredient }
-                      checked={ checkboxs[ingredient] || ' ' }
-                      onChange={ handleChange }
-                    />
-                    { `${ingredient} - ${ingredients[0][index]}` }
-                  </label>
-                </li>)))}
+                    <label
+                      htmlFor={ ingredient }
+                      className={ checkboxs[ingredient] }
+                      data-testid={ `${index}-ingredient-step` }
+                    >
+                      <input
+                        type="checkbox"
+                        name={ ingredient }
+                        id={ ingredient }
+                        checked={ checkboxs[ingredient] }
+                        onChange={ handleChange }
+                      />
+                      { `${ingredient} - ${ingredients[0][index]}` }
+                    </label>
+                  </li>
+                )))}
             </ul>
           </div>
         </div>
